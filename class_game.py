@@ -9,17 +9,15 @@ class Game:
         self.categories = []
         self.red_points = 0
         self.blue_points = 0
-        # Calculate max points
+        # Calculate max points from the length of secret word.
         self.max_points = len(secret_word)
-        # Create secret word scramble
+        # Create secret word scramble letters for both teams in the same way.
         self.secret_scramble = []
         j = 0
         for i in secret_word:
             j += 1
             self.secret_scramble.append(j)
         random.shuffle(self.secret_scramble)
-        print(self.secret_word)
-        print(self.max_points)
 
     # -- METHODS --
     # Add new category 
@@ -29,7 +27,7 @@ class Game:
         return True
     
     # Change score of a team
-    # Teams are assigned names for better readabikity of code
+    # Teams are assigned names for better readability of code
     def change_score(self, who, points):
         # Red = 1
         if (who == 1) and (self.red_points < self.max_points):
