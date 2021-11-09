@@ -18,13 +18,21 @@ this_game = class_game.Game("Supertajná tajenka.")
 
 @app.route("/red_dashboard")
 def red_dashboard():
-    partial_secret = this_game.get_partial_secret(1)
-    return "<p>Red partial secret is:" + partial_secret + "</p>"
+    return render_template('dashboard.html',
+    partial_secret = this_game.get_partial_secret(1),
+    name = "Red team",
+    color="danger",
+    points=this_game.red_points,
+    server=SERVER)
 
 @app.route("/blue_dashboard")
 def blue_dashboard():
-    partial_secret = this_game.get_partial_secret(2)
-    return "<p>Blue partial secret is:" + partial_secret + "</p>"
+    return render_template('dashboard.html',
+    partial_secret = this_game.get_partial_secret(2),
+    name = "Blue team",
+    color="primary",
+    points=this_game.blue_points,
+    server=SERVER)
 
 # Administrace
 @app.route("/admin_dashboard", methods=['GET', 'POST'])
