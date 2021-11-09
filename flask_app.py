@@ -14,7 +14,7 @@ MAXIMUM=3484.86
 SERVER="http://127.0.0.1:5000/"
 # SERVER="https://smidra.pythonanywhere.com/"
 
-this_game = class_game.Game("Supertajná tajenka.")
+this_game = class_game.Game("a hoj")
 
 @app.route("/red_dashboard")
 def red_dashboard():
@@ -41,13 +41,13 @@ def admin_dashboard():
     if request.method == 'POST':
 
         if request.form['points'] == "r+" :
-            this_game.red_points += 1
+            this_game.change_score(1,1)
         elif request.form['points'] == "r-" :
-            this_game.red_points -= 1
+            this_game.change_score(1,-1)
         elif request.form['points'] == "b+" :
-            this_game.blue_points += 1
+            this_game.change_score(2, 1)
         elif request.form['points'] == "b-" :
-            this_game.blue_points -= 1
+            this_game.change_score(2,-1)
         else:
             print("Unknown form submission.")
 

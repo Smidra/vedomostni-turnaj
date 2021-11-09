@@ -9,6 +9,8 @@ class Game:
         self.categories = []
         self.red_points = 0
         self.blue_points = 0
+        # Calculate max points
+        self.max_points = len(secret_word)
         # Create secret word scramble
         self.secret_scramble = []
         j = 0
@@ -17,7 +19,7 @@ class Game:
             self.secret_scramble.append(j)
         random.shuffle(self.secret_scramble)
         print(self.secret_word)
-        print(self.secret_scramble)
+        print(self.max_points)
 
     # -- METHODS --
     # Add new category 
@@ -30,25 +32,33 @@ class Game:
     # Teams are assigned names for better readabikity of code
     def change_score(self, who, points):
         # Red = 1
-        if who == 1:
+        if (who == 1) and (self.red_points < self.max_points):
             self.red_points += points
         # Blue = 2
-        elif who == 2:
+        elif (who == 2) and (self.blue_points < self.max_points):
             self.blue_points += points
 
         return True
 
     # Get partial secret string for one of the teams
-    # Red = 1
-    # Blue = 2
     def get_partial_secret(self, who):
-        # if who == 1:
-        # for i in range(0, self.red_points):
+        partial_secret = ["*" for i in range(len(self.secret_word))]
+        print(self.secret_word)
+        print(self.secret_scramble)
+        print(partial_secret)
 
-                
-        # if who == 2:
+        # RED
+        if who == 1:
+            for i in range(0, self.red_points):
+                partial_secret[ self.secret_scramble[i] -1 ] = self.secret_word[ self.secret_scramble[i] -1 ]
+        # BLUE
+        if who == 2:
+            for i in range(0, self.blue_points):
+                partial_secret[ self.secret_scramble[i]-1 ] = self.secret_word[ self.secret_scramble[i] -1 ]
 
-        return "TBA"
+        print(partial_secret)
+        return_string = ''.join(map(str, partial_secret))
+        return return_string
 
     # Load a new game from CSV file
     def load():
