@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+import class_game
 app = Flask(__name__)
 
 app.r = 0
@@ -9,8 +10,43 @@ app.b = 0
 app.y = 0
 INCREMENT=9.7
 MAXIMUM=3484.86
-# SERVER="http://127.0.0.1:5000/"
-SERVER="https://everesttest03.azurewebsites.net/"
+
+SERVER="http://127.0.0.1:5000/"
+# SERVER="https://smidra.pythonanywhere.com/"
+
+this_game = class_game.Game("Supertajná tajenka.")
+
+@app.route("/red_dashboard")
+def red_dashboard():
+    partial_secret = this_game.get_partial_secret(1)
+    return "<p>Red partial secret is:" + partial_secret + "</p>"
+
+@app.route("/blue_dashboard")
+def blue_dashboard():
+    partial_secret = this_game.get_partial_secret(2)
+    return "<p>Blue partial secret is:" + partial_secret + "</p>"
+
+# Administrace
+@app.route("/admin_dashboard", methods=['GET', 'POST'])
+def admin_dashboard():
+    # Change points
+    if request.method == 'POST':
+
+        if request.form['points'] == "r+" :
+            this_game.red_points += 1
+        elif request.form['points'] == "r-" :
+            this_game.red_points -= 1
+        elif request.form['points'] == "b+" :
+            this_game.blue_points += 1
+        elif request.form['points'] == "b-" :
+            this_game.blue_points -= 1
+        else:
+            print("Unknown form submission.")
+
+    return render_template('administrace.html',
+    r=this_game.red_points, b=this_game.blue_points,
+    server=SERVER)
+
 
 def htmlify(cislo):
     return "width: "+ str(cislo/(MAXIMUM/100)) + "%"
@@ -69,17 +105,3 @@ def admin():
     prog_y=htmlify(app.y),
     server=SERVER)
 
-@app.route("/setpoints")
-def setPoints():    
-    pocet = request.args.get('body', '')
-    barva = request.args.get('barva', '')
-    if barva=="r":
-        app.r += int(pocet)
-    elif barva=="b":
-        app.b += int(pocet)
-    elif barva=="g":
-        app.g += int(pocet)
-    elif barva=="y":
-        app.y += int(pocet)
-    
-    return "Nastaveno " + pocet + " pro " + barva
