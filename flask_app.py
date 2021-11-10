@@ -61,8 +61,9 @@ def game_dashboard():
 # Administrace
 @app.route("/admin_dashboard", methods=['GET', 'POST'])
 def admin_dashboard():
-    # Change points
+    loaded_game="none"
     if request.method == 'POST':
+        # Change points
         try:
             if request.form['points'] == "r+" :
                 this_game.change_score(1,1)
@@ -75,15 +76,17 @@ def admin_dashboard():
         except:
             print("No points sent.")
         
+        # Load file
         try:
             f = request.files['file']  
             f.save(f.filename)
+            loaded_game=f.filename
         except:
             print("No file sent.")
 
     return render_template('administrace.html',
     r=this_game.red_points, b=this_game.blue_points,
-    server=SERVER)
+    loaded_game=loaded_game)
 
 
 def htmlify(cislo):
