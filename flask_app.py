@@ -15,7 +15,22 @@ SERVER="http://127.0.0.1:5000/"
 # SERVER="https://smidra.pythonanywhere.com/"
 
 this_game = class_game.Game("a hoj")
+this_game.add_category("Dejepis")
+this_game.categories[0].add_question("Kdo je Havel?", "Byvaly prezident")
+this_game.categories[0].add_question("Kdy skončila 2.sv?", "1945")
+this_game.categories[0].add_question("Kdy skončila 2.sv?", "1945")
+this_game.categories[0].add_question("Kdy skončila 2.sv?", "1945")
+this_game.categories[0].add_question("Kdy skončila 2.sv?", "1945")
+this_game.categories[0].add_question("Kdy skončila 2.sv?", "1945")
+this_game.add_category("ZSV")
+this_game.add_category("Biologie")
 
+this_game.categories[1].add_question("Kdy skončila 2.sv?", "1945")
+this_game.categories[1].add_question("Kdy skončila 2.sv?", "1945")
+this_game.categories[1].add_question("Kdy skončila 2.sv?", "1945")
+
+
+# Teams
 @app.route("/red_dashboard")
 def red_dashboard():
     return render_template('dashboard.html',
@@ -33,6 +48,15 @@ def blue_dashboard():
     color="primary",
     points=this_game.blue_points,
     server=SERVER)
+
+# Gameboard
+@app.route("/")
+def game_dashboard():
+    return render_template('game.html',
+    r=this_game.red_points,
+    b=this_game.blue_points,
+    nr_categories=len(this_game.categories),
+    categories=this_game.categories)
 
 # Administrace
 @app.route("/admin_dashboard", methods=['GET', 'POST'])
@@ -59,7 +83,7 @@ def admin_dashboard():
 def htmlify(cislo):
     return "width: "+ str(cislo/(MAXIMUM/100)) + "%"
 
-@app.route("/")
+@app.route("/index")
 def index():
     return render_template('index.html',
     r=app.r, b=app.b, g=app.g, y=app.y,

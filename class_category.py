@@ -6,14 +6,16 @@ class Category:
     def __init__(self, category_text):
         self.category_text = category_text
         self.questions = []
+        self.nr_questions = 0
 
     # -- METHODS --
     # Add new question to category
     def add_question(self, text, answer):
         new_question = class_question.Question(text,answer)
         self.questions.append(new_question)
+        self.nr_questions += 1
         return True
 
-    def add_question(self, question):
-        self.questions.append(question)
-        return True
+    # def add_question(self, question):
+    #     self.questions.append(question)
+    #     return True
