@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+from class_category import Category
 import class_game
 app = Flask(__name__)
 
@@ -51,6 +52,19 @@ def game_dashboard():
     nr_categories=len(this_game.categories),
     categories=this_game.categories,
     game_name=this_game.game_name)
+
+@app.route("/question", methods=['GET', 'POST'])
+def game_question():
+    selected_category = int(request.form['cat'])
+    selected_question = int(request.form['question'])
+    this_category = this_game.categories[selected_category]
+
+    return render_template('question.html',
+    r=this_game.red_points,
+    b=this_game.blue_points,
+    category_name=this_category.category_text,
+    question_text=this_category.questions[selected_question].question_text)
+    # question_text=this_game.get_category_by_name(selected_category).questions[selected_question].question_text)
 
 # Administrace
 @app.route("/admin_dashboard", methods=['GET', 'POST'])

@@ -4,7 +4,7 @@
     <meta charset=utf-8>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <title>Game dashboard</title>
+    <title>Vědomostní soutěž</title>
 </head>
 <body class="">
     <h1 class="mt-4 display-1 text-center">{{ game_name }}</h1>  
@@ -13,12 +13,20 @@
     <div class="container border border-dark border-2 rounded p-4"  style="max-width: 70%;" >
         <!-- CATEGORIES - For loop logic of jinja template -->
         {%for i in range(0, nr_categories)%}
-        <div class="row">
+        <div class="row align-items-center">
             <div class="col-2 lead text-end">{{ categories[i].category_text }}</div>
             <!-- QUESTIONS - For loop logic of jinja template -->
             {%for j in range(0, categories[i].nr_questions )%}
             <!-- <div class="col-1">{{ categories[i].questions[j].question_text }}</div> -->
-            <div class="col-md-auto btn btn-link"><p>Otázka {{ j + 1 }}</p></div>
+            <!-- <input type="submit" class="col-md-auto btn btn-link align-items-center p-3" value="{{ categories[i] }}" name="cat">Otázka {{ j + 1 }}</input> -->
+            <!-- <input type="submit" class="col-md-auto btn btn-link align-items-center p-3" value="{{ i }}" name="cat">Otázka {{ j + 1 }}</input> -->
+            <div class="col-1">
+              <form method="post" action="{{ server }}question">
+                <input type="hidden" value="{{ i }}" name="cat"/>
+                <input type="hidden" value="{{ j }}" name="question"/>
+                <input type="submit" class="col-md-auto btn btn-link align-items-center p-3" value="Otázka {{ j + 1 }}"/>
+              </form>
+            </div>
             {%endfor%}
         </div>
         {%endfor%}

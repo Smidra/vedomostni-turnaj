@@ -59,7 +59,7 @@ class Game:
 
     # Get partial secret string for one of the teams
     def get_partial_secret(self, who):
-        partial_secret = ["*" for i in range(len(self.secret_word))]
+        partial_secret = [" –⁠ " for i in range(len(self.secret_word))]
 
         # RED
         if who == 1:
