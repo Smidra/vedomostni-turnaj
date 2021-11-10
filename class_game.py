@@ -49,10 +49,10 @@ class Game:
     # Teams are assigned names for better readability of code
     def change_score(self, who, points):
         # Red = 1
-        if (who == 1) and (self.red_points < self.max_points):
+        if (who == 1) and ( (self.red_points < self.max_points) or (points < 0) ):
             self.red_points += points
         # Blue = 2
-        elif (who == 2) and (self.blue_points < self.max_points):
+        elif (who == 2) and ( (self.blue_points < self.max_points) or (points < 0) ):
             self.blue_points += points
 
         return True
@@ -60,7 +60,6 @@ class Game:
     # Get partial secret string for one of the teams
     def get_partial_secret(self, who):
         partial_secret = [" –⁠ " for i in range(len(self.secret_word))]
-
         # RED
         if who == 1:
             for i in range(0, self.red_points):
