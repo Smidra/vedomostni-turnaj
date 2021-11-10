@@ -1,31 +1,50 @@
 import class_category
 import random
+import pandas
 
 class Game:
     # -- ATTRIBUTES --
     # The point of the game is to guess the secret word
     def __init__(self, secret_word):
-        self.secret_word = secret_word
+        self.game_name = "Default game"
+        self.secret_word = ""
         self.categories = []
         self.red_points = 0
         self.blue_points = 0
         # Calculate max points from the length of secret word.
-        self.max_points = len(secret_word)
+        self.max_points = 0
         # Create secret word scramble letters for both teams in the same way.
         self.secret_scramble = []
+        self.update_secret(secret_word)
+
+    # -- METHODS --
+    # Update secret word in this game
+    def update_secret(self, new_secret_word):
+        self.max_points = len(new_secret_word)
+        self.secret_word = new_secret_word
+        self.secret_scramble = []
         j = 0
-        for i in secret_word:
+        for i in new_secret_word:
             j += 1
             self.secret_scramble.append(j)
         random.shuffle(self.secret_scramble)
-
-    # -- METHODS --
-    # Add new category 
-    def add_category(self, category_text):
-        new_category = class_category.Category(category_text)
-        self.categories.append(new_category)
         return True
-    
+
+    # Add new category if it does not exist.
+    def add_category(self, category_text):
+        # Does it exist?
+        if self.get_category_by_name(category_text) == False:
+            new_category = class_category.Category(category_text)
+            self.categories.append(new_category)
+        return True
+
+    # Get category by strng name
+    def get_category_by_name(self, category_name):
+        for cat in self.categories:
+            if cat.category_text == category_name:
+                return cat
+        return False
+
     # Change score of a team
     # Teams are assigned names for better readability of code
     def change_score(self, who, points):
@@ -41,9 +60,6 @@ class Game:
     # Get partial secret string for one of the teams
     def get_partial_secret(self, who):
         partial_secret = ["*" for i in range(len(self.secret_word))]
-        print(self.secret_word)
-        print(self.secret_scramble)
-        print(partial_secret)
 
         # RED
         if who == 1:
@@ -54,10 +70,22 @@ class Game:
             for i in range(0, self.blue_points):
                 partial_secret[ self.secret_scramble[i]-1 ] = self.secret_word[ self.secret_scramble[i] -1 ]
 
-        print(partial_secret)
         return_string = ''.join(map(str, partial_secret))
         return return_string
 
     # Load a new game from CSV file
-    def load():
+    def load(self, game_csv_name):
+        array_game = pandas.read_csv(game_csv_name, header=None).values
+        # Delet old game categories
+        self.categories=[]
+        # Game info
+        self.game_name=array_game[0][1]
+        self.update_secret(array_game[1][1])
+        # Create game questions
+        for i in range(5,len(array_game)):
+            self.add_category(array_game[i][0])
+            this_category = self.get_category_by_name(array_game[i][0])
+            this_category.add_question(array_game[i][1], array_game[i][2])
+
+        print("---")
         return True

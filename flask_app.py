@@ -4,13 +4,6 @@ from flask import request
 import class_game
 app = Flask(__name__)
 
-app.r = 0
-app.g = 0
-app.b = 0
-app.y = 0
-INCREMENT=9.7
-MAXIMUM=3484.86
-
 SERVER="http://127.0.0.1:5000/"
 # SERVER="https://smidra.pythonanywhere.com/"
 
@@ -80,6 +73,7 @@ def admin_dashboard():
         try:
             f = request.files['file']  
             f.save(f.filename)
+            this_game.load(f.filename)
             loaded_game=f.filename
         except:
             print("No file sent.")
