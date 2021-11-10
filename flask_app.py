@@ -63,17 +63,23 @@ def game_dashboard():
 def admin_dashboard():
     # Change points
     if request.method == 'POST':
-
-        if request.form['points'] == "r+" :
-            this_game.change_score(1,1)
-        elif request.form['points'] == "r-" :
-            this_game.change_score(1,-1)
-        elif request.form['points'] == "b+" :
-            this_game.change_score(2, 1)
-        elif request.form['points'] == "b-" :
-            this_game.change_score(2,-1)
-        else:
-            print("Unknown form submission.")
+        try:
+            if request.form['points'] == "r+" :
+                this_game.change_score(1,1)
+            elif request.form['points'] == "r-" :
+                this_game.change_score(1,-1)
+            elif request.form['points'] == "b+" :
+                this_game.change_score(2, 1)
+            elif request.form['points'] == "b-" :
+                this_game.change_score(2,-1)
+        except:
+            print("No points sent.")
+        
+        try:
+            f = request.files['file']  
+            f.save(f.filename)
+        except:
+            print("No file sent.")
 
     return render_template('administrace.html',
     r=this_game.red_points, b=this_game.blue_points,
