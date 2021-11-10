@@ -7,7 +7,7 @@
     <title>Game dashboard</title>
 </head>
 <body class="">
-    <h1 class="mt-4 display-1 text-center">Game dashboard</h1>  
+    <h1 class="mt-4 display-1 text-center">{{ game_name }}</h1>  
     <br>
 
     <div class="container border border-dark border-2 rounded p-4"  style="max-width: 70%;" >
@@ -18,7 +18,7 @@
             <!-- QUESTIONS - For loop logic of jinja template -->
             {%for j in range(0, categories[i].nr_questions )%}
             <!-- <div class="col-1">{{ categories[i].questions[j].question_text }}</div> -->
-            <div class="col-md-auto"><p>Otázka {{ j + 1 }}</p></div>
+            <div class="col-md-auto btn btn-link"><p>Otázka {{ j + 1 }}</p></div>
             {%endfor%}
         </div>
         {%endfor%}
@@ -28,14 +28,20 @@
     <br>
     <br>
 
-    <div class="row text-center">
-        <div class="col">
-            <button type="button" class="btn btn-danger btn-lg" style="height: 100px; width: 200px;" disabled>{{ r }}</button>
+    <div class="container text-center " style="max-width: fit-content;">
+        <div class="row">
+          <div class="col lead d-flex align-items-center">Red</div>
+          <div class="col">
+            <button type="button" class="btn btn-outline-danger btn-lg border-2 rounded" style="width: 110px" disabled>{{ r }}</button>
         </div>
-        <div class="col">
-            <button type="button" class="btn btn-primary btn-lg" style="height: 100px; width: 200px;" disabled>{{ b }}</button>
+          <div class="col">
+            <button type="button" class="btn btn-outline-primary btn-lg border-2 rounded" style="width: 110px;" disabled>{{ b }}</button>
         </div>
-    </div>
+          <div class="col lead d-flex align-items-center">
+            Blue
+          </div>
+        </div>
+      </div>
 
 </body>
 </html>

@@ -49,7 +49,8 @@ def game_dashboard():
     r=this_game.red_points,
     b=this_game.blue_points,
     nr_categories=len(this_game.categories),
-    categories=this_game.categories)
+    categories=this_game.categories,
+    game_name=this_game.game_name)
 
 # Administrace
 @app.route("/admin_dashboard", methods=['GET', 'POST'])
