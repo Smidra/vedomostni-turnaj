@@ -8,21 +8,12 @@ app = Flask(__name__)
 SERVER="http://127.0.0.1:5000/"
 # SERVER="https://smidra.pythonanywhere.com/"
 
-this_game = class_game.Game("a hoj")
-this_game.add_category("Dejepis")
-this_game.categories[0].add_question("Kdo je Havel?", "Byvaly prezident")
-this_game.categories[0].add_question("Kdy skončila 2.sv?", "1945")
-this_game.categories[0].add_question("Kdy skončila 2.sv?", "1945")
-this_game.categories[0].add_question("Kdy skončila 2.sv?", "1945")
-this_game.categories[0].add_question("Kdy skončila 2.sv?", "1945")
+this_game = class_game.Game("Deafult secret")
+this_game.add_category("Dějepis")
+this_game.categories[0].add_question("Kdo je to Václav Havel?", "Bývalý prezident ČR")
 this_game.categories[0].add_question("Kdy skončila 2.sv?", "1945")
 this_game.add_category("ZSV")
-this_game.add_category("Biologie")
-
-this_game.categories[1].add_question("Kdy skončila 2.sv?", "1945")
-this_game.categories[1].add_question("Kdy skončila 2.sv?", "1945")
-this_game.categories[1].add_question("Kdy skončila 2.sv?", "1945")
-
+this_game.categories[1].add_question("Co je to inflace?", "Postupné znehodnocování peněz.")
 
 # Teams
 @app.route("/red_dashboard")

@@ -21,7 +21,16 @@
               <form method="post" action="{{ server }}question">
                 <input type="hidden" value="{{ i }}" name="cat"/>
                 <input type="hidden" value="{{ j }}" name="question"/>
-                <input type="submit" class="col-md-auto btn btn-link align-items-center p-3" value="Otázka {{ j + 1 }}"/>
+                <!-- <input type="submit" class="col-md-auto btn btn-link align-items-center p-3" value="Otázka {{ j + 1 }}"/> -->
+
+                {% if categories[i].questions[j].seen %}
+                <!-- Visited -->
+                <input type="submit" class="col-md-auto btn btn-link align-items-center p-2 text-secondary" style="text-decoration: none;" value="Otázka {{ j + 1 }}"/>
+                {% else %}
+                <!-- Not-visited -->
+                <input type="submit" class="col-md-auto btn btn-link align-items-center p-2 fw-bold" style="text-decoration: none;" value="Otázka {{ j + 1 }}"/>
+                {% endif %}
+
               </form>
             </div>
             {%endfor%}
