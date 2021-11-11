@@ -53,18 +53,32 @@ def game_dashboard():
     categories=this_game.categories,
     game_name=this_game.game_name)
 
+# @app.route("/question", methods=['GET', 'POST'])
+# def game_question():
+#     selected_category = int(request.form['cat'])
+#     selected_question = int(request.form['question'])
+#     this_category = this_game.categories[selected_category]
+
+#     return render_template('question.html',
+#     r=this_game.red_points,
+#     b=this_game.blue_points,
+#     category_name=this_category.category_text,
+#     question_text=this_category.questions[selected_question].question_text)
+    # question_text=this_game.get_category_by_name(selected_category).questions[selected_question].question_text)
+
 @app.route("/question", methods=['GET', 'POST'])
-def game_question():
+def game_answer():
     selected_category = int(request.form['cat'])
     selected_question = int(request.form['question'])
     this_category = this_game.categories[selected_category]
+    this_category.questions[selected_question].make_seen()
 
     return render_template('question.html',
     r=this_game.red_points,
     b=this_game.blue_points,
     category_name=this_category.category_text,
-    question_text=this_category.questions[selected_question].question_text)
-    # question_text=this_game.get_category_by_name(selected_category).questions[selected_question].question_text)
+    question_text=this_category.questions[selected_question].question_text,
+    question_answer=this_category.questions[selected_question].question_answer)
 
 # Administrace
 @app.route("/admin_dashboard", methods=['GET', 'POST'])
