@@ -17,9 +17,6 @@
             <div class="col-2 lead text-end">{{ categories[i].category_text }}</div>
             <!-- QUESTIONS - For loop logic of jinja template -->
             {%for j in range(0, categories[i].nr_questions )%}
-            <!-- <div class="col-1">{{ categories[i].questions[j].question_text }}</div> -->
-            <!-- <input type="submit" class="col-md-auto btn btn-link align-items-center p-3" value="{{ categories[i] }}" name="cat">Otázka {{ j + 1 }}</input> -->
-            <!-- <input type="submit" class="col-md-auto btn btn-link align-items-center p-3" value="{{ i }}" name="cat">Otázka {{ j + 1 }}</input> -->
             <div class="col-1">
               <form method="post" action="{{ server }}question">
                 <input type="hidden" value="{{ i }}" name="cat"/>

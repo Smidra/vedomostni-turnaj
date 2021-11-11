@@ -43,9 +43,31 @@ def blue_dashboard():
     points=this_game.blue_points,
     server=SERVER)
 
+# Global function (eww) to parse reqest to change points
+def add_points(recieved_request):
+    request=recieved_request
+    try:
+        if request.form['points'] == "r+" :
+            this_game.change_score(1,1)
+        elif request.form['points'] == "r-" :
+            this_game.change_score(1,-1)
+        elif request.form['points'] == "b+" :
+            this_game.change_score(2, 1)
+        elif request.form['points'] == "b-" :
+            this_game.change_score(2,-1)
+    except:
+        print("No points sent.")
+        return False
+    return True
+
 # Gameboard
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def game_dashboard():
+    if request.method == 'POST':
+        # Change points
+        print("Got POST method")
+        add_points(request)
+        print("changed points")
     return render_template('game.html',
     r=this_game.red_points,
     b=this_game.blue_points,
@@ -67,24 +89,13 @@ def game_answer():
     question_text=this_category.questions[selected_question].question_text,
     question_answer=this_category.questions[selected_question].question_answer)
 
-# Administrace
+# Administartion
 @app.route("/admin_dashboard", methods=['GET', 'POST'])
 def admin_dashboard():
     loaded_game="none"
     if request.method == 'POST':
         # Change points
-        try:
-            if request.form['points'] == "r+" :
-                this_game.change_score(1,1)
-            elif request.form['points'] == "r-" :
-                this_game.change_score(1,-1)
-            elif request.form['points'] == "b+" :
-                this_game.change_score(2, 1)
-            elif request.form['points'] == "b-" :
-                this_game.change_score(2,-1)
-        except:
-            print("No points sent.")
-        
+        add_points(request)        
         # Load file
         try:
             f = request.files['file']  
