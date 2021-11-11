@@ -1,61 +1,75 @@
 <!doctype html>
-<html lang=en>
+<html lang=cs>
+
 <head>
-    <meta charset=utf-8>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/turn.css') }}">
-    <title>Vědomostní soutěž - otázka</title>
+  <meta charset=utf-8>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/turn.css') }}">
+  <title>Vědomostní soutěž - otázka</title>
 </head>
+
 <body class="container">
-    <h1 class="mt-4 lead text-center">{{ category_name }}</h1>  
+  <!-- Header -->
+  <h1 class="mt-4 lead text-center">{{ category_name }}</h1>
 
-    <!-- Flipping by Anad Vunnam https://bbbootstrap.com/snippets/bootstrap-5-flipping-cards-for-catalog-29291738-->
-    <div class="container p-4" style="width: 70%;">
-      <div class="box">
-          <div class="body">
-              <!-- Question -->
-              <div class="contentd-flex flex-column align-items-center justify-content-center bg-white align-middle">
-                <div class="container border border-dark border-2 rounded p-4">
-                  <div class="display-5 lead" style="height: 250px; display: flex; justify-content: center; align-items: center;">{{ question_text }}</div>
-                </div>
-              </div>
-              <!-- Answer -->
-              <div class="content d-flex flex-column align-items-center justify-content-center">
-                  <div class="rounded p-4" style="height: 80%; width: 80%;">
-                      <h3 class="text-white fs-5">Správná odpověď:</h3>
-                      <p class="display-5 text-white">{{ question_answer }}</p>
-                  </div>
-              </div>
-
+  <!-- Flipcard -->
+  <!-- Flipping by Anad Vunnam https://bbbootstrap.com/snippets/bootstrap-5-flipping-cards-for-catalog-29291738-->
+  <div class="container p-4" style="width: 70%;">
+    <div class="box">
+      <div class="body">
+        <!-- Question -->
+        <div class="contentd-flex flex-column align-items-center justify-content-center bg-white align-middle">
+          <div class="container border border-dark border-2 rounded p-4">
+            <div class="display-5 lead" style="height: 250px; display: flex; justify-content: center; align-items: center;">{{ question_text }}</div>
           </div>
+        </div>
+        <!-- Answer -->
+        <div class="content d-flex flex-column align-items-center justify-content-center">
+          <div class="rounded p-4" style="height: 80%; width: 80%;">
+            <h3 class="text-white fs-5">Správná odpověď:</h3>
+            <p class="display-5 text-white">{{ question_answer }}</p>
+          </div>
+        </div>
+
       </div>
-
+    </div>
     <br>
     <br>
 
+    <!-- Adding points for correct answer -->
     <div class="container text-center" style="max-width: fit-content;">
       <div class="row">
+
         <div class="col lead d-flex align-items-center">Red</div>
 
+        <!-- Add +1 to red -->
         <div class="col">
           <form method="post" action="{{ server }}/">
-                <input type="hidden" value="r+" name="points"/>
-                <button type="submit" class="btn btn-outline-danger btn-lg border-2 rounded" style="width: 110px" >+1</button>
+            <input type="hidden" value="r+" name="points" />
+            <button type="submit" class="btn btn-outline-danger btn-lg border-2 rounded"
+              style="width: 110px">+1</button>
           </form>
         </div>
 
+        <!-- Add +1 to noone -->
         <div class="col">
           <form method="get" action="{{ server }}/">
-            <button type="submit" class="btn btn-outline-secondary btn-lg border-2 rounded" style="width: 110px;" > –⁠ </button>
+            <button type="submit" class="btn btn-outline-secondary btn-lg border-2 rounded" style="width: 110px;"> –⁠
+            </button>
           </form>
         </div>
 
+        <!-- Add +1 to blue -->
         <div class="col">
           <form method="post" action="{{ server }}/">
             <div class="text-center">
-                <input type="hidden" value="b+" name="points"/>
-                <button type="submit" class="btn btn-outline-primary btn-lg border-2 rounded" style="width: 110px" >+1</button>
+              <input type="hidden" value="b+" name="points" />
+              <button type="submit" class="btn btn-outline-primary btn-lg border-2 rounded"
+                style="width: 110px">+1</button>
             </div>
           </form>
         </div>
@@ -63,13 +77,14 @@
         <div class="col lead d-flex align-items-center">Blue</div>
 
       </div>
-  </div>
+    </div>
 
 
 
   </div>
 
-    
-  
+
+
 </body>
+
 </html>
