@@ -15,7 +15,7 @@ this_game.categories[0].add_question("Kdy skončila 2.sv?", "1945")
 this_game.add_category("ZSV")
 this_game.categories[1].add_question("Co je to inflace?", "Postupné znehodnocování peněz.")
 
-# Teams
+# Team dashboards
 @app.route("/red_dashboard")
 def red_dashboard():
     return render_template('dashboard.html',
@@ -54,11 +54,9 @@ def add_points(recieved_request):
 # Gameboard
 @app.route("/", methods=['GET', 'POST'])
 def game_dashboard():
+    # Change points if coming from a question.
     if request.method == 'POST':
-        # Change points
-        print("Got POST method")
         add_points(request)
-        print("changed points")
     return render_template('game.html',
     r=this_game.red_points,
     b=this_game.blue_points,
@@ -67,12 +65,13 @@ def game_dashboard():
     game_name=this_game.game_name)
 
 @app.route("/question", methods=['GET', 'POST'])
-def game_answer():
+def game_question():
+    # Parse what is the desired category and question
     selected_category = int(request.form['cat'])
     selected_question = int(request.form['question'])
     this_category = this_game.categories[selected_category]
     this_category.questions[selected_question].make_seen()
-
+    # Render it
     return render_template('question.html',
     r=this_game.red_points,
     b=this_game.blue_points,
@@ -95,7 +94,6 @@ def admin_dashboard():
             loaded_game=f.filename
         except:
             print("No file sent.")
-
     return render_template('administrace.html',
     r=this_game.red_points, b=this_game.blue_points,
     loaded_game=loaded_game)
