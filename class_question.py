@@ -1,3 +1,4 @@
+# Class objects represent one question in the game
 class Question:
     # -- ATTRIBUTES --
     # The point of the game is to guess the secret word

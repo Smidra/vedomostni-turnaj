@@ -1,5 +1,6 @@
 import class_question
 
+# Class objects represent a single category from the game
 class Category:
     # -- ATTRIBUTES --
     # The point of the game is to guess the secret word
@@ -15,7 +16,3 @@ class Category:
         self.questions.append(new_question)
         self.nr_questions += 1
         return True
-
-    # def add_question(self, question):
-    #     self.questions.append(question)
-    #     return True
