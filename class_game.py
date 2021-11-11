@@ -61,9 +61,9 @@ class Game:
 
         return True
 
-    # Get partial secret string for one of the teams
+    # Get partial secret string for one of the teams –
     def get_partial_secret(self, who):
-        partial_secret = [" –⁠ " for i in range(len(self.secret_word))]
+        partial_secret = ["–" for i in range(len(self.secret_word))]
         # Red = 1
         if who == 1:
             for i in range(0, self.red_points):
