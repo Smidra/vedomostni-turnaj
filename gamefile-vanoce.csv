@@ -1,0 +1,25 @@
+Název,Vánoční informatika,
+Tajenka,Let it snow,
+,,
+Kategorie,Otázka,Odpověď
+---,---,---
+Periferie,Jmenuj alespoň tři periferie které se připojují k počítači jako VSTUP.,"Myš, klávesnice, dotyková obrazovka, mikrofon"
+Periferie,Jmenuj alespoň dvě periferie které se připojují k počítači jako VÝSTUP.,"Obrazovka, reproduktor, sluchátka"
+Periferie,Z jakých barev je složen pixel na LCD obrazovce?,"RGB, Red-Green-Blue"
+Periferie,"Kolik pixelů je v monitoru s rozlišením 1080p (1920 na výšku, 1080 na šířku)",2073600
+Soubory,Kolik souborů může být maximálně ve složce? ,Neomezeně.
+Soubory,Kolikrát můžu založit složku uvnitř složky uvnitř složky ....,Neomezeně.
+Soubory,Kolik souborů (třeba písniček) můžu uložit do složky online (do cloudu)?,Tolik kolik se na disk vejde.
+Soubory,Kolik souborů (třeba písniček) můžu uložit do složky na disk?,Tolik kolik se vejde na disk v serveru.
+Bezpečnost,Jaké jsou typy hackerů?,White/black hat.
+Bezpečnost,Co je to ransomware útok?,Vydírání peněz za dešifrování dat.
+Bezpečnost,"Když jdu do internetového bankovnictví na PC prohlížeči, na co si mám dát pozor?","XSS, zavirovaný počítač, silné heslo, autentičnost stránky..."
+Bezpečnost,Co je to dvoufaktorové ověřování?,"K heslu se vyžaduje ještě nějaký klíč (mobil, klíčenka, pin, otisk)"
+Hesla,Co je při tvorbě a správě hesla/hesel nejdůležitější?,Neodfláknout to.
+Hesla,"Jaké výhody a nevýhody má, když používám všude stejné heslo?","Dobře se to pamatuje, ale hackerovi stačí prolomit jednu stránku a má všechny účty."
+Hesla,Jak by mělo být moje heslo dlouhé?,"Alespoň 10, 12 a víc je lepší."
+Hesla,Heslo by mělo být velmi těžko zapamtovatelné. Pravda / Lež ?,"Lež - heslo by se mělo dobře pamatovat, ale špatně hádat"
+Vánoce,Jaké zvíře táhne saně pro Santu,Sob
+Vánoce,Kde se narodil Ježíšek,V Betlémě
+Vánoce,Kolik je svíček na adventním věnci?,Čtyři
+Vánoce,"Je tradicí, že se tento kov o Vánocích rozaví a vlije do vody.",Olovo
