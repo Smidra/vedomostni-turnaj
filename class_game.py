@@ -81,6 +81,9 @@ class Game:
         # Load csv file formatted as gamefile_sample.csv
         array_game = pandas.read_csv(game_csv_name, header=None).values
         self.categories = [] # Delete old game categories
+        # Null points
+        self.red_points = 0
+        self.blue_points = 0
         # Game info
         self.game_name = array_game[0][1]
         self.update_secret(array_game[1][1])
