@@ -27,7 +27,7 @@ Hra opisuje oblíbenou televizní soutě "Jeopardy" či v češtině "Riskuj". S
 Když přijde na tým řada má možnost si vybrat zda bude ve svém kole odpovídat buď na otázku a nebo se pokusí rozluštit tajenku. Tajenku se může pokusit rozluštit libovolně-mnohokrát. Pokud luští tajenku pak má jeden pokus. Pokud odpovídá na otázku, vybere si jí z herního pole a pak má 30-60s na odpověď. Tu pak moderátor odhalí podržením na otázku a případně přidělí body. Za každý bod se příslušnému týmu na jeho monitoru odhalí jedno písmeno tajenky.
 
 
-# Administrativa hry
+# Administrace hry
 Do hry je potřeba vložit soubor s definicí hry. Formát souboru byl navržen tak, aby ho mohl vytvářet kdokoliv z pedagogického sboru. Jedná se o běžnou google tabulku, která s následně stáhne příbo ve formátu .csv, který se importuje do hry. Je velmi jednoduché šablonu vyplnit a hra by ji měla po uploadu úspěšně překousat. Stačí CSV z Google tabulek stáhnout (soubor-stáhnout-csv) a pak stažený soubor nahrát do hry. To zároveň resetuje celou hru.
 
 Ukázka definice hry je volně přístupná na https://docs.google.com/spreadsheets/d/1zbQkvFwCIeVGs0YkSzFnw-ZVXSWXRlndgtvr3Jee-9U/edit?usp=sharing
