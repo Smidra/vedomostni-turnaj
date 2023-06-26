@@ -124,7 +124,7 @@ def admin_dashboard(what_action="default"):
             except:
                 print("No file saved.")
             
-            time.sleep(6) # There is a second sleep to trigger the spinner in administrace.html. I have shamed the honor of my familly with this code.
+            time.sleep(5) # There is a second sleep to trigger the spinner in administrace.html. I have shamed the honor of my familly with this code.
             what_action="default"
             return send_file("/tmp/output.xlsx")
 

@@ -55,7 +55,7 @@
 
         <!-- Loading new game -->
         <form class="container text-center" action="/admin_dashboard/load_gamefile" method="post" enctype="multipart/form-data">
-            <p class="lead">Load gamefile into game {{ loaded_game }}</p>
+            <p class="lead">Načíst gamefile do hry [ {{ loaded_game }} ]</p>
             <input type="file" name="file" />
             <input type="submit" value="Upload">
         </form>
@@ -63,13 +63,15 @@
         <!-- Create gamefiles -->
         <div style="height: 1cm;"></div>
         <form class="container text-center" action="/admin_dashboard/load_questionslist" method="post" enctype="multipart/form-data">
-            <p class="lead">Generate gamefiles from {{ loaded_questionslist }}</p>
+            <p class="lead">Generovat gamefiles.</p>
+            <p><i>Generování není deterministické a přestává fungovat kolem 70 % celkového počtu otázek.</br>
+                Když se generování nepovede zkuste to znovu, snižte požadavky, nebo vymyslete další otázky.</i></p>
             <input type="file" name="file" style="width: 20em;"/></br>
             <input type="text" placeholder="počet her" class="mt-1" name="NUMEBR_OF_GAMEFILES" style="width: 20em;" /></br>
             <input type="text" placeholder="počet předmětů (řádků)" class="mt-1" name="NUMEBR_OF_SUBJECTS_IN_GAMEFILE" style="width: 20em;"/></br>
             <input type="text" placeholder="počet otázek (sloupců)" class="mt-1" name="NUMBER_OF_QUESTIONS_PER_SUBJECT" style="width: 20em;"/></br>
             <input onclick="showSpinner()" type="submit" value="Generate gamefiles" class="mt-1" style="width: 20em;">
-            <div style="display: none;" id="spinner" class="mt-2 container text-center spinner-border text-success" role="status"></div>
+            <div style="display: none;" id="spinner" class="mt-2 container text-center spinner-border text-primary" role="status"></div>
         </form>
 
         <script>
