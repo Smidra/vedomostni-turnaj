@@ -49,3 +49,12 @@ docker run -d -p 5050:5000 smidra/vedomostni-turnaj
 ```
 
 Hra bude spuštěna na http://0.0.0.0:5050
+
+
+# Development hry
+
+```
+flask --app flask_app run 
+```
+
+Hra bude spuštěna na http://127.0.0.1:5000
