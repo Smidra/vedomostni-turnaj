@@ -14,7 +14,9 @@
 <body>
     <main class="container" style="max-width: 70%;">
         <!-- Headning -->
-        <h1 class="mt-5 display-1 text-center">Administrace</h1>
+        <h1 class="mt-5 display-1 text-center">
+            <a href="">Administrace</a>
+        </h1>
         <br>
         <br>
 
@@ -62,15 +64,27 @@
         <div style="height: 1cm;"></div>
         <form class="container text-center" action="/admin_dashboard/load_questionslist" method="post" enctype="multipart/form-data">
             <p class="lead">Generate gamefiles from {{ loaded_questionslist }}</p>
-            <input type="file" placeholder="Vybrat CSV (předmět, otázka, odpověď)" name="file" />
-            <input type="text" placeholder="počet her" name="NUMEBR_OF_GAMEFILES" />
-            <input type="text" placeholder="počet předmětů (řádků)" name="NUMEBR_OF_SUBJECTS_IN_GAMEFILE" />
-            <input type="text" placeholder="počet otázek (sloupců)" name="NUMBER_OF_QUESTIONS_PER_SUBJECT" />
-            <input type="submit" value="Generate gamefiles">
-        </form> 
+            <input type="file" name="file" style="width: 20em;"/></br>
+            <input type="text" placeholder="počet her" class="mt-1" name="NUMEBR_OF_GAMEFILES" style="width: 20em;" /></br>
+            <input type="text" placeholder="počet předmětů (řádků)" class="mt-1" name="NUMEBR_OF_SUBJECTS_IN_GAMEFILE" style="width: 20em;"/></br>
+            <input type="text" placeholder="počet otázek (sloupců)" class="mt-1" name="NUMBER_OF_QUESTIONS_PER_SUBJECT" style="width: 20em;"/></br>
+            <input onclick="showSpinner()" type="submit" value="Generate gamefiles" class="mt-1" style="width: 20em;">
+            <div style="display: none;" id="spinner" class="mt-2 container text-center spinner-border text-success" role="status"></div>
+        </form>
+
+        <script>
+        function showSpinner() {
+            var spinner = document.getElementById("spinner");
+            spinner.style.display = "block";
+            setTimeout(hideSpinner, 6000); // There is a second sleep to trigger the spinner in flask_app.py. I have shamed the honor of my familly with this code.
+        }
+
+        function hideSpinner() {
+            var spinner = document.getElementById("spinner");
+            spinner.style.display = "none";
+        }
+        </script>
 
     </main>
-
 </body>
-
 </html>

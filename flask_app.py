@@ -5,6 +5,8 @@ from class_category import Category
 import class_game
 import gamefileGenerator.createGamefiles as gamefilesGenerator
 from flask import send_file
+import time
+import os
 app = Flask(__name__)
 
 SERVER="http://127.0.0.1:5000/"
@@ -86,7 +88,13 @@ def game_question():
 @app.route("/admin_dashboard/<what_action>", methods=['GET', 'POST'])
 def admin_dashboard(what_action="default"):
     loaded_game="no loaded game"
-    loaded_questionslist="no loaded questionslist"  
+    loaded_questionslist="no loaded questionslist" 
+    # Cleanup of old export
+    try:
+        os.remove("output.xlsx")
+    except:
+        pass
+    # Manage aministrtor request 
     if request.method == 'POST':
         # Change points
         add_points(request)
@@ -111,9 +119,13 @@ def admin_dashboard(what_action="default"):
                 NUMEBR_OF_SUBJECTS_IN_GAMEFILE = request.form['NUMEBR_OF_SUBJECTS_IN_GAMEFILE']
                 NUMBER_OF_QUESTIONS_PER_SUBJECT = request.form['NUMBER_OF_QUESTIONS_PER_SUBJECT']
                 gamefilesGenerator.generate_gamefiles( str(f.filename), "output.xlsx", int(NUMEBR_OF_GAMEFILES), int(NUMEBR_OF_SUBJECTS_IN_GAMEFILE), int(NUMBER_OF_QUESTIONS_PER_SUBJECT))
+                # Cleanup the uploaded file - would cause more security holes that i care to fix. Let the files live 3 months - who cares.
             except:
                 print("No file saved.")
-            send_file("./output.xlsx")
+            
+            time.sleep(6) # There is a second sleep to trigger the spinner in administrace.html. I have shamed the honor of my familly with this code.
+            what_action="default"
+            return send_file("./output.xlsx")
 
     return render_template('administrace.html',
     r=this_game.red_points, b=this_game.blue_points,

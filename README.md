@@ -34,6 +34,23 @@ Ukázka definice hry je volně přístupná na https://docs.google.com/spreadshe
 
 V případě problémů lze body upravovat i ve vytvořeném administračním rozhraní. Nástěnky s tajenkou stejně jako administrační rozhraní lez nalézt na níže uvedených endpointech.
 
+## Automatická tvorba Gamefiles
+Do administračního rozhraní hry je implementovaná funkce aktomatické losování otázek + tvorba Gamefile. Stačí jít do administračníáho rozhraní. Pod nápisem "Generate gamefiles" uvidíte možnost nahrát soubor. Program očekává CSVčko se třemi sloupci. Pro větší turnaje doporučuji mít takto uloženou databázi více jak 1000 otázek.
+
+```
+PŘEDMĚT1, OTÁZKA1, ODPOVĚĎ1
+PŘEDMĚT1, OTÁZKA2, ODPOVĚĎ2
+PŘEDMĚT1, OTÁZKA3, ODPOVĚĎ3
+PŘEDMĚT2, OTÁZKA4, ODPOVĚĎ4
+...
+```
+
+Vyplňte poté pole "počet her", které určí kolik Gamefiles se vygeneruje. Je důležité myslet na všechny hry, které se budou během turnaje hrát - program generuje Gamefiles v rámci jednoho generování tak, aby se žádné otázky neopakovaly. Pak už stačí jen vyplnit počet řádků a sloupců a stisknout "Generate gamefiles".
+
+Po šesti sekundách program buď nabídle soubor "output.xlsx" ke stažení, nebo ho hodí error, nebo nic neudělá. V druhém a třetím případě to zkuste znovu (rozdělování není deterministické - program se mohl zacyklit) a zkuste trochu déle počkat. Pokud to nepomůže tak zkuste změnit zadané parametry nebo rozšířit soubor o další otázky.
+
+Ve staženém XLSX souboru si upravte tajenky, názvy a promyslete obtížnost jednotlivých kol. Pokud jste s nimi spojeni tak jednotlivé listy uložte jako nový soubor .csv.  To by měl být plně validní gamefile, který lze importovat do hry. Enjoy. :)
+
 # Demo hry
 Herní obrazovka: https://smidra.pythonanywhere.com/
 Tajenka pro červený tým: https://smidra.pythonanywhere.com/red_dashboard
