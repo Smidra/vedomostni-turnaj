@@ -75,3 +75,7 @@ flask --app flask_app run
 ```
 
 Hra bude spuštěna na http://127.0.0.1:5000
+
+
+# Známé bugy
+Na Linuxu mi při načtení csvčka, které má v názku háčky čárky mezery stránka spadne.
