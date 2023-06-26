@@ -92,7 +92,7 @@ def admin_dashboard(what_action="default"):
     loaded_questionslist="no loaded questionslist" 
     # Cleanup of old export
     try:
-        os.remove("output.xlsx")
+        os.remove("/tmp/output.xlsx")
     except:
         pass
     # Manage aministrtor request 
@@ -119,14 +119,14 @@ def admin_dashboard(what_action="default"):
                 NUMEBR_OF_GAMEFILES = request.form['NUMEBR_OF_GAMEFILES']
                 NUMEBR_OF_SUBJECTS_IN_GAMEFILE = request.form['NUMEBR_OF_SUBJECTS_IN_GAMEFILE']
                 NUMBER_OF_QUESTIONS_PER_SUBJECT = request.form['NUMBER_OF_QUESTIONS_PER_SUBJECT']
-                gamefilesGenerator.generate_gamefiles( str(f.filename), "output.xlsx", int(NUMEBR_OF_GAMEFILES), int(NUMEBR_OF_SUBJECTS_IN_GAMEFILE), int(NUMBER_OF_QUESTIONS_PER_SUBJECT))
+                gamefilesGenerator.generate_gamefiles( str(f.filename), "/tmp/output.xlsx", int(NUMEBR_OF_GAMEFILES), int(NUMEBR_OF_SUBJECTS_IN_GAMEFILE), int(NUMBER_OF_QUESTIONS_PER_SUBJECT))
                 # Cleanup the uploaded file - would cause more security holes that i care to fix. Let the files live 3 months - who cares.
             except:
                 print("No file saved.")
             
             time.sleep(6) # There is a second sleep to trigger the spinner in administrace.html. I have shamed the honor of my familly with this code.
             what_action="default"
-            return send_file("./output.xlsx")
+            return send_file("/tmp/output.xlsx")
 
     return render_template('administrace.html',
     r=this_game.red_points, b=this_game.blue_points,

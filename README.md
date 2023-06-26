@@ -58,8 +58,39 @@ Tajenka pro modrý tým: https://smidra.pythonanywhere.com/blue_dashboard
 Administrace: https://smidra.pythonanywhere.com/admin_dashboard
 
 # Deployment hry
-Hra je naprogramována ve frameworku Flask.
+Hra je naprogramována ve frameworku Flask. Lze nasadit zdarma na pythonanywhere - stačí naklonovat toto GIT repo a nastavit následujícím způsobem.
+
+```
+Source code: /home/smidra/vedomostni-turnaj
+Working directory: /home/smidra/
+WSGI configuration file: /var/www/smidra_pythonanywhere_com_wsgi.py
+Python version: 3.9
+```
+
+A to WSGI (/var/www/smidra_pythonanywhere_com_wsgi.py) vypadá takto:
+
+```
+# This file contains the WSGI configuration required to serve up your
+# web application at http://<your-username>.pythonanywhere.com/
+# It works by setting the variable 'application' to a WSGI handler of some
+# description.
+#
+# The below has been auto-generated for your Flask project
+
+import sys
+
+# add your project directory to the sys.path
+project_home = '/home/smidra/vedomostni-turnaj'
+if project_home not in sys.path:
+    sys.path = [project_home] + sys.path
+
+# import flask app but need to call it "application" for WSGI to work
+from flask_app import app as application  # noqa
+```
+
+## Docker
 V případě zájmu o vlastní nasazení využijte docker příkazem, který se postará o nasazení včetně spuštení mockup webserveru na adrese localhost:80
+... ale nevím kdy jsem ho naposledy zkoušel jesti funguje.
 
 ```
 docker run -d -p 5050:5000 smidra/vedomostni-turnaj
