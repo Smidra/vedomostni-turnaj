@@ -16,15 +16,15 @@
   <h1 class="mt-4 display-1 text-center">{{ game_name }}</h1>
   <br>
 
-  <!-- Gameboard -->
-  <div class="container border border-dark border-2 rounded p-4" style="max-width: 70%;">
+  <!-- Gameboard <div class="container border border-dark border-2 rounded p-4" style="max-width: 70%;"> -->
+  <div class="container border border-dark border-2 rounded p-4">
     <!-- CATEGORIES - For loop logic of jinja template -->
     {%for i in range(0, nr_categories)%}
     <div class="row align-items-center">
-      <div class="col-2 lead text-end">{{ categories[i].category_text }}</div>
+      <div class="col lead text-end">{{ categories[i].category_text }}</div>
       <!-- QUESTIONS - For loop logic of jinja template -->
       {%for j in range(0, categories[i].nr_questions )%}
-      <div class="col-1">
+      <div class="col">
         <form method="post" action="{{ server }}question">
           <input type="hidden" value="{{ i }}" name="cat" />
           <input type="hidden" value="{{ j }}" name="question" />
