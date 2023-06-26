@@ -18,6 +18,7 @@ this_game.categories[0].add_question("Kdo je to Václav Havel?", "Bývalý prezi
 this_game.categories[0].add_question("Kdy skončila 2.sv?", "1945")
 this_game.add_category("ZSV")
 this_game.categories[1].add_question("Co je to inflace?", "Postupné znehodnocování peněz.")
+this_game.categories[1].add_question("Zlatá cihlička!", "Bod zdarma.")
 
 # Team dashboards
 @app.route("/red_dashboard")
