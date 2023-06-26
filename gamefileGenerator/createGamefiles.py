@@ -105,7 +105,7 @@ class Databank:
             popped_name = self.subjects[subject_index].name
             popped_question, popped_answer = self.subjects[subject_index].pop()
             new_name_questions_answers.append((popped_name, popped_question, popped_answer))
-            print(popped_name, popped_question, popped_answer)
+            # print(popped_name, popped_question, popped_answer) # Too much printing causes I/O error on pythonanywhere
             # For this subject, remove "one ticket" from lottery list. (To keep the lottery fair)
             ticket_index = self.lottery_list.index(popped_name)
             self.lottery_list.pop(ticket_index)
