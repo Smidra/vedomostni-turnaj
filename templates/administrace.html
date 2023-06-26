@@ -52,11 +52,22 @@
         <br>
 
         <!-- Loading new game -->
-        <form class="container text-center" action="/admin_dashboard" method="post" enctype="multipart/form-data">
-            <p class="lead">Load game {{ loaded_game }}</p>
+        <form class="container text-center" action="/admin_dashboard/load_gamefile" method="post" enctype="multipart/form-data">
+            <p class="lead">Load gamefile into game {{ loaded_game }}</p>
             <input type="file" name="file" />
             <input type="submit" value="Upload">
         </form>
+
+        <!-- Create gamefiles -->
+        <div style="height: 1cm;"></div>
+        <form class="container text-center" action="/admin_dashboard/load_questionslist" method="post" enctype="multipart/form-data">
+            <p class="lead">Generate gamefiles from {{ loaded_questionslist }}</p>
+            <input type="file" placeholder="Vybrat CSV (předmět, otázka, odpověď)" name="file" />
+            <input type="text" placeholder="počet her" name="NUMEBR_OF_GAMEFILES" />
+            <input type="text" placeholder="počet předmětů (řádků)" name="NUMEBR_OF_SUBJECTS_IN_GAMEFILE" />
+            <input type="text" placeholder="počet otázek (sloupců)" name="NUMBER_OF_QUESTIONS_PER_SUBJECT" />
+            <input type="submit" value="Generate gamefiles">
+        </form> 
 
     </main>
 

@@ -3,6 +3,8 @@ from flask import render_template
 from flask import request
 from class_category import Category
 import class_game
+import gamefileGenerator.createGamefiles as gamefilesGenerator
+from flask import send_file
 app = Flask(__name__)
 
 SERVER="http://127.0.0.1:5000/"
@@ -80,21 +82,40 @@ def game_question():
     question_answer=this_category.questions[selected_question].question_answer)
 
 # Administartion
-@app.route("/admin_dashboard", methods=['GET', 'POST'])
-def admin_dashboard():
-    loaded_game="none"
+@app.route('/admin_dashboard', defaults={'what_action': "default"}, methods=['GET', 'POST'])
+@app.route("/admin_dashboard/<what_action>", methods=['GET', 'POST'])
+def admin_dashboard(what_action="default"):
+    loaded_game="no loaded game"
+    loaded_questionslist="no loaded questionslist"  
     if request.method == 'POST':
         # Change points
-        add_points(request)        
-        # Load file
-        try:
-            f = request.files['file']  
-            f.save(f.filename)
-            this_game.load(f.filename)
-            loaded_game=f.filename
-        except:
-            print("No file sent.")
+        add_points(request)
+        # Do I wish to load something?
+        # -- Load gamefile
+        if (what_action=="load_gamefile"):
+            try:
+                f = request.files['file']  
+                f.save(f.filename)
+                this_game.load(f.filename)
+                loaded_game=f.filename  
+            except:
+                print("No file sent.")
+        # -- Load questions list
+        elif (what_action=="load_questionslist"):
+            try:
+                f = request.files['file']
+                f.save(f.filename)
+                loaded_questionslist=f.filename
+                print("Got into Python filename is:", f.filename)
+                NUMEBR_OF_GAMEFILES = request.form['NUMEBR_OF_GAMEFILES']
+                NUMEBR_OF_SUBJECTS_IN_GAMEFILE = request.form['NUMEBR_OF_SUBJECTS_IN_GAMEFILE']
+                NUMBER_OF_QUESTIONS_PER_SUBJECT = request.form['NUMBER_OF_QUESTIONS_PER_SUBJECT']
+                gamefilesGenerator.generate_gamefiles( str(f.filename), "output.xlsx", int(NUMEBR_OF_GAMEFILES), int(NUMEBR_OF_SUBJECTS_IN_GAMEFILE), int(NUMBER_OF_QUESTIONS_PER_SUBJECT))
+            except:
+                print("No file saved.")
+            send_file("./output.xlsx")
+
     return render_template('administrace.html',
     r=this_game.red_points, b=this_game.blue_points,
-    loaded_game=loaded_game)
+    loaded_game=loaded_game, loaded_questionslist=loaded_questionslist, what_action=what_action)
 
