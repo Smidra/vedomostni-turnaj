@@ -11,6 +11,7 @@ class Game:
         self.categories = []
         self.red_points = 0
         self.blue_points = 0
+        self.green_points = 0
         # Create secret word scramble - letters for both teams in the same way.
         self.secret_word = ""
         self.max_points = 0
@@ -58,6 +59,9 @@ class Game:
         # Blue = 2
         elif (who == 2) and ((self.blue_points < self.max_points) or (points < 0)):
             self.blue_points += points
+        # Green = 3
+        elif (who == 3) and ((self.green_points < self.max_points) or (points < 0)):
+            self.green_points += points
 
         return True
 
@@ -72,6 +76,10 @@ class Game:
         if who == 2:
             for i in range(0, self.blue_points):
                 partial_secret[self.secret_scramble[i]-1] = self.secret_word[self.secret_scramble[i]-1]
+        # Green = 3
+        if who == 3:
+            for i in range(0, self.green_points):
+                partial_secret[self.secret_scramble[i]-1] = self.secret_word[self.secret_scramble[i]-1]
 
         return_string = ''.join(map(str, partial_secret))
         return return_string
@@ -84,6 +92,7 @@ class Game:
         # Null points
         self.red_points = 0
         self.blue_points = 0
+        self.green_points = 0
         # Game info
         self.game_name = array_game[0][1]
         self.update_secret(array_game[1][1])

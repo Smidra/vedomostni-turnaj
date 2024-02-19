@@ -47,10 +47,24 @@
   <!-- Current game points -->
   <div class="container text-center " style="max-width: fit-content;">
     <div class="row">
-      <div class="col lead d-flex align-items-center">Red</div>
+
+      <!-- <div class="col lead d-flex align-items-center">Red</div> -->
+
       <div class="col">
-        <button type="button" class="btn btn-outline-danger btn-lg border-2 rounded" style="width: 110px" disabled>{{ r }}</button>
+        <button type="button" class="btn btn-outline-danger btn-lg border-2 rounded" style="width: 110px" disabled>R {{ r }}</button>
       </div>
+
+      <div class="col">
+        <button type="button" class="btn btn-outline-success btn-lg border-2 rounded" style="width: 110px;" disabled>G {{ g }}</button>
+      </div>
+
+      <!-- <div class="col lead d-flex align-items-center">Green</div> -->
+
+      <div class="col">
+        <button type="button" class="btn btn-outline-primary btn-lg border-2 rounded" style="width: 110px;" disabled>B {{ b }}</button>
+      </div>
+
+      <!-- <div class="col lead d-flex align-items-center">Blue</div> -->
 
       <div class="col">
         <form method="get" action="{{ server }}/">
@@ -58,10 +72,7 @@
         </form>
       </div>
 
-      <div class="col">
-        <button type="button" class="btn btn-outline-primary btn-lg border-2 rounded" style="width: 110px;" disabled>{{ b }}</button>
-      </div>
-      <div class="col lead d-flex align-items-center">Blue</div>
+
     </div>
   </div>
 

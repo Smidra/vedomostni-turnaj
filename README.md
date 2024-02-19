@@ -102,7 +102,7 @@ Hra bude spuštěna na http://0.0.0.0:5050
 # Development hry
 
 ```
-flask --app flask_app run 
+FLASK_APP="flask_app.py" flask run
 ```
 
 Hra bude spuštěna na http://127.0.0.1:5000

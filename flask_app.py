@@ -39,6 +39,15 @@ def blue_dashboard():
     points=this_game.blue_points,
     server=SERVER)
 
+@app.route("/green_dashboard")
+def green_dashboard():
+    return render_template('dashboard.html',
+    partial_secret = this_game.get_partial_secret(2),
+    name = "Green team",
+    color="success",
+    points=this_game.green_points,
+    server=SERVER)
+
 # Global function (eww) to parse reqest to change points
 def add_points(recieved_request):
     request=recieved_request
@@ -51,6 +60,10 @@ def add_points(recieved_request):
             this_game.change_score(2, 1)
         elif request.form['points'] == "b-" :
             this_game.change_score(2,-1)
+        elif request.form['points'] == "g-" :
+            this_game.change_score(3,-1)
+        elif request.form['points'] == "g+" :
+            this_game.change_score(3,1)
     except:
         print("No points sent.")
         return False
@@ -65,6 +78,7 @@ def game_dashboard():
     return render_template('game.html',
     r=this_game.red_points,
     b=this_game.blue_points,
+    g=this_game.green_points,
     nr_categories=len(this_game.categories),
     categories=this_game.categories,
     game_name=this_game.game_name)
@@ -80,6 +94,7 @@ def game_question():
     return render_template('question.html',
     r=this_game.red_points,
     b=this_game.blue_points,
+    g=this_game.green_points,
     category_name=this_category.category_text,
     question_text=this_category.questions[selected_question].question_text,
     question_answer=this_category.questions[selected_question].question_answer)
@@ -129,6 +144,6 @@ def admin_dashboard(what_action="default"):
             return send_file("/tmp/output.xlsx")
 
     return render_template('administrace.html',
-    r=this_game.red_points, b=this_game.blue_points,
+    r=this_game.red_points, b=this_game.blue_points, g=this_game.green_points,
     loaded_game=loaded_game, loaded_questionslist=loaded_questionslist, what_action=what_action)
 

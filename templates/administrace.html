@@ -26,6 +26,9 @@
                 <button type="button" class="btn btn-danger btn-lg" style="height: 100px; width: 200px;" disabled>{{ r }}</button>
             </div>
             <div class="col">
+                <button type="button" class="btn btn-success btn-lg" style="height: 100px; width: 200px;" disabled>{{ g }}</button>
+            </div>
+            <div class="col">
                 <button type="button" class="btn btn-primary btn-lg" style="height: 100px; width: 200px;" disabled>{{ b }}</button>
             </div>
         </div>
@@ -38,6 +41,14 @@
                     <div class="text-center">
                         <input type="submit" class="btn btn-danger btn-lg text-center" value="r+" name="points" />
                         <input type="submit" class="btn btn-danger btn-lg text-center" value="r-" name="points" />
+                    </div>
+                </form>
+            </div>
+            <div class="col">
+                <form method="post" action="{{ server }}admin_dashboard">
+                    <div class="text-center">
+                        <input type="submit" class="btn btn-success btn-lg text-center" value="g+" name="points" />
+                        <input type="submit" class="btn btn-success btn-lg text-center" value="g-" name="points" />
                     </div>
                 </form>
             </div>
