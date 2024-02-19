@@ -42,7 +42,7 @@ def blue_dashboard():
 @app.route("/green_dashboard")
 def green_dashboard():
     return render_template('dashboard.html',
-    partial_secret = this_game.get_partial_secret(2),
+    partial_secret = this_game.get_partial_secret(3),
     name = "Green team",
     color="success",
     points=this_game.green_points,
