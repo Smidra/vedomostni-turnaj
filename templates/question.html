@@ -20,7 +20,6 @@
 <!-- Question/Answer Card -->
 <div class="flex justify-center w-full">
     <div id="card-content" class="card w-full max-w-4xl border border-gray-300 rounded-xl transition-all duration-300">
-        <!-- Front/back card with flip functionality -->
         <div class="card-body min-h-[300px] flex items-center justify-center text-center">
             <!-- Question shown by default -->
             <div id="question" class="text-3xl font-medium transition-opacity duration-300">
@@ -34,8 +33,11 @@
             </div>
         </div>
 
+        <!-- Toggle button -->
         <div class="card-actions justify-center pb-4">
-            <button id="answerToggleBtn" onclick="toggleAnswer()" class="btn btn-primary btn-soft min-w-40">Zobrazit odpověď</button>
+            <button id="answerToggleBtn" onclick="toggleAnswer()" class="btn btn-primary btn-soft min-w-40">Zobrazit
+                odpověď
+            </button>
         </div>
     </div>
 </div>
@@ -43,7 +45,7 @@
 
 <div class="flex justify-center w-full mt-8">
     <div class="stats rounded-xl overflow-hidden border border-gray-300">
-        <!-- Timer stat -->
+        <!-- Timer -->
         <div class="stat flex-1 flex flex-col items-center justify-center">
             <div class="stat-title">Časovač</div>
             <button id="toggle-timer" class="mb-2 w-full">
@@ -105,21 +107,23 @@
         </div>
 
         <form method="get" action="{{ server }}/" class="h-full">
-            <button type="submit" class="btn btn-ghost btn-lg border-2 rounded w-full h-full text-bold text-lg">←</button>
+            <button type="submit" class="btn btn-ghost btn-xl rounded-none border-0 w-full h-full">←
+            </button>
         </form>
 
     </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    // Function to handle the timer
+    document.addEventListener('DOMContentLoaded', function () {
         const timerValue = document.getElementById('timer-value');
         const toggleBtn = document.getElementById('toggle-timer');
         let count = 0;
         let timerInterval = null;
         let isRunning = false;
 
-        toggleBtn.addEventListener('mousedown', function() {
+        toggleBtn.addEventListener('mousedown', function () {
             if (isRunning) {
                 // Reset timer
                 clearInterval(timerInterval);
@@ -127,7 +131,7 @@
                 updateTimerDisplay(count);
                 isRunning = true;
 
-                timerInterval = setInterval(function() {
+                timerInterval = setInterval(function () {
                     count++;
                     updateTimerDisplay(count);
                 }, 1000);
@@ -138,7 +142,7 @@
                 isRunning = true;
                 toggleBtn.classList.add('btn-active');
 
-                timerInterval = setInterval(function() {
+                timerInterval = setInterval(function () {
                     count++;
                     updateTimerDisplay(count);
                 }, 1000);
@@ -149,9 +153,8 @@
             timerValue.style.setProperty('--value', value);
         }
     });
-</script>
 
-<script>
+    // Function to toggle between question and answer
     function toggleAnswer() {
         const question = document.getElementById('question');
         const answer = document.getElementById('answer');
@@ -195,14 +198,6 @@
             }, 300);
         }
     }
-
-    // Import the timer functionality
-    document.addEventListener('DOMContentLoaded', function () {
-        // Load timer script if it exists
-        const timerScript = document.createElement('script');
-        timerScript.src = "{{ url_for('static',filename='scripts/timer.js') }}";
-        document.head.appendChild(timerScript);
-    });
 </script>
 </body>
 </html>

@@ -7,7 +7,8 @@
     <!-- Daisy + Tailwind + Darmode -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')); window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => !localStorage.getItem('theme') && document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light'));</script>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => !localStorage.getItem('theme') && document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light'));</script>
 
     <title>Vědomostní soutěž</title>
 </head>
@@ -16,7 +17,7 @@
 <!-- Heading -->
 <h1 class="mt-10 mb-10 text-center text-6xl font-bold">{{ game_name }}</h1>
 
-<!-- Gameboard <div class="container border border-dark border-2 rounded p-4" style="max-width: 70%;"> -->
+<!-- Game categories and questions -->
 <div class="flex justify-center items-center">
     <div class="overflow-x-auto w-full max-w-4xl rounded-xl">
         <div class="rounded-xl overflow-hidden border border-gray-300">
@@ -95,12 +96,11 @@
         </div>
 
         <form method="get" action="{{ server }}/" class="h-full">
-            <button type="submit" class="btn btn-ghost btn-lg border-2 rounded w-full h-full">↺</button>
+            <button type="submit" class="btn btn-ghost btn-xl rounded-none border-0 w-full h-full">↺</button>
         </form>
 
     </div>
 </div>
 
 </body>
-
 </html>

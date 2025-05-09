@@ -19,8 +19,6 @@
 </h1>
 
 <!-- Team score display with points adjustment -->
-<!-- Team score display with points adjustment -->
-<!-- Team score display with points adjustment -->
 <div class="grid grid-cols-1 md:grid-cols-1 gap-8 my-8">
     <div class="stats rounded-xl overflow-hidden border border-gray-300 w-full">
         <!-- Red team -->
@@ -79,57 +77,6 @@
     </div>
 </div>
 
-<!--&lt;!&ndash; Team score display &ndash;&gt;-->
-<!--<div class="grid grid-cols-3 gap-4 my-8">-->
-<!--    <div class="card bg-base-100 shadow-xl">-->
-<!--        <div class="card-body items-center text-center">-->
-<!--            <div class="rounded-full bg-red-500 h-6 w-6 mb-2"></div>-->
-<!--            <h2 class="card-title">Červený tým</h2>-->
-<!--            <div class="text-4xl font-bold">{{ r }}</div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="card bg-base-100 shadow-xl">-->
-<!--        <div class="card-body items-center text-center">-->
-<!--            <div class="rounded-full bg-green-500 h-6 w-6 mb-2"></div>-->
-<!--            <h2 class="card-title">Zelený tým</h2>-->
-<!--            <div class="text-4xl font-bold">{{ g }}</div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--    <div class="card bg-base-100 shadow-xl">-->
-<!--        <div class="card-body items-center text-center">-->
-<!--            <div class="rounded-full bg-blue-500 h-6 w-6 mb-2"></div>-->
-<!--            <h2 class="card-title">Modrý tým</h2>-->
-<!--            <div class="text-4xl font-bold">{{ b }}</div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
-
-<!--&lt;!&ndash; Adding/subtracting points &ndash;&gt;-->
-<!--<div class="grid grid-cols-3 gap-4 my-8">-->
-<!--    <div class="flex flex-col items-center">-->
-<!--        <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2">-->
-<!--            <button type="submit" name="points" value="r+" class="btn btn-outline btn-error">+1</button>-->
-<!--            <button type="submit" name="points" value="r-" class="btn btn-outline btn-error">-1</button>-->
-<!--        </form>-->
-<!--    </div>-->
-
-<!--    <div class="flex flex-col items-center">-->
-<!--        <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2">-->
-<!--            <button type="submit" name="points" value="g+" class="btn btn-outline btn-success">+1</button>-->
-<!--            <button type="submit" name="points" value="g-" class="btn btn-outline btn-success">-1</button>-->
-<!--        </form>-->
-<!--    </div>-->
-
-<!--    <div class="flex flex-col items-center">-->
-<!--        <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2">-->
-<!--            <button type="submit" name="points" value="b+" class="btn btn-outline btn-primary">+1</button>-->
-<!--            <button type="submit" name="points" value="b-" class="btn btn-outline btn-primary">-1</button>-->
-<!--        </form>-->
-<!--    </div>-->
-<!--</div>-->
-
 <!-- Divider -->
 <div class="divider"></div>
 
@@ -165,7 +112,6 @@
 
             <form action="/admin_dashboard/load_questionslist" method="post" enctype="multipart/form-data"
                   class="form-control w-full">
-
                 <div class="flex flex-col gap-3 mt-2">
                     <div class="form-control">
                         <label class="label">
@@ -173,7 +119,6 @@
                         </label>
                         <input type="file" name="file" class="file-input file-input-bordered w-full"/>
                     </div>
-
                     <div class="form-control">
                         <label class="label">
                             <span class="label-text">Počet her</span>
@@ -181,7 +126,6 @@
                         <input type="text" name="NUMBER_OF_GAMEFILES"
                                class="input input-bordered w-full"/>
                     </div>
-
                     <div class="form-control">
                         <label class="label">
                             <span class="label-text">Počet předmětů (řádků)</span>
@@ -189,7 +133,6 @@
                         <input type="text" name="NUMBER_OF_SUBJECTS_IN_GAMEFILE"
                                class="input input-bordered w-full"/>
                     </div>
-
                     <div class="form-control">
                         <label class="label">
                             <span class="label-text">Počet otázek (sloupců)</span>
@@ -197,7 +140,6 @@
                         <input type="text" name="NUMBER_OF_QUESTIONS_PER_SUBJECT"
                                class="input input-bordered w-full"/>
                     </div>
-
                     <button id="submitBtn" onclick="handleFormSubmit(event)" type="submit" class="btn btn-soft btn-primary">
                         <span id="buttonText">Generovat gamefiles</span>
                         <span id="spinner" class="loading loading-spinner loading-md hidden"></span>
@@ -245,6 +187,7 @@
 </div>
 
 <script>
+    // Function to toggle the answer visibility
     function handleFormSubmit(event) {
         event.preventDefault();
 
@@ -312,15 +255,6 @@
             });
     }
 
-    function resetButton() {
-        const spinner = document.getElementById("spinner");
-        const buttonText = document.getElementById("buttonText");
-        const submitBtn = document.getElementById("submitBtn");
-
-        spinner.classList.add("hidden");
-        buttonText.classList.remove("hidden");
-        submitBtn.classList.remove("btn-disabled");
-    }
 </script>
 </body>
 </html>
