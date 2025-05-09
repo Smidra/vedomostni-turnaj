@@ -3,101 +3,324 @@
 
 <head>
     <meta charset=utf-8>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+    <!-- Daisy + Tailwind + Darmode -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => !localStorage.getItem('theme') && document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light'));</script>
+
     <title>Admin dashboard</title>
 </head>
 
-<body>
-    <main class="container" style="max-width: 70%;">
-        <!-- Headning -->
-        <h1 class="mt-5 display-1 text-center">
-            <a href="">Administrace</a>
-        </h1>
-        <br>
-        <br>
+<body class="container mx-auto px-4 max-w-4xl">
+<!-- Heading -->
+<h1 class="mt-10 mb-10 text-center text-6xl font-bold">
+    <a href="">Administrace</a>
+</h1>
 
-        <!-- Current points -->
-        <div class="row text-center">
-            <div class="col">
-                <button type="button" class="btn btn-danger btn-lg" style="height: 100px; width: 200px;" disabled>{{ r }}</button>
+<!-- Team score display with points adjustment -->
+<!-- Team score display with points adjustment -->
+<!-- Team score display with points adjustment -->
+<div class="grid grid-cols-1 md:grid-cols-1 gap-8 my-8">
+    <div class="stats rounded-xl overflow-hidden border border-gray-300 w-full">
+        <!-- Red team -->
+        <div class="stat flex-1">
+            <div class="flex items-center">
+                <button class="btn btn-error btn-circle h-8 w-8"></button>
+                <div class="ml-3">
+                    <div class="stat-title">Červení</div>
+                    <div class="stat-value">{{ r }}</div>
+                    <div class="stat-desc">bodů</div>
+                </div>
             </div>
-            <div class="col">
-                <button type="button" class="btn btn-success btn-lg" style="height: 100px; width: 200px;" disabled>{{ g }}</button>
-            </div>
-            <div class="col">
-                <button type="button" class="btn btn-primary btn-lg" style="height: 100px; width: 200px;" disabled>{{ b }}</button>
-            </div>
-        </div>
-        <br>
-
-        <!-- Adding/substracting points -->
-        <div class="row text-center">
-            <div class="col">
-                <form method="post" action="{{ server }}admin_dashboard">
-                    <div class="text-center">
-                        <input type="submit" class="btn btn-danger btn-lg text-center" value="r+" name="points" />
-                        <input type="submit" class="btn btn-danger btn-lg text-center" value="r-" name="points" />
-                    </div>
-                </form>
-            </div>
-            <div class="col">
-                <form method="post" action="{{ server }}admin_dashboard">
-                    <div class="text-center">
-                        <input type="submit" class="btn btn-success btn-lg text-center" value="g+" name="points" />
-                        <input type="submit" class="btn btn-success btn-lg text-center" value="g-" name="points" />
-                    </div>
-                </form>
-            </div>
-            <div class="col">
-                <form method="post" action="{{ server }}admin_dashboard">
-                    <div class="text-center">
-                        <input type="submit" class="btn btn-primary btn-lg text-center" value="b+" name="points" />
-                        <input type="submit" class="btn btn-primary btn-lg text-center" value="b-" name="points" />
-                    </div>
+            <div class="stat-actions mt-4 w-full">
+                <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2 w-full">
+                    <button type="submit" name="points" value="r+" class="btn btn-md btn-error flex-1">+1</button>
+                    <button type="submit" name="points" value="r-" class="btn btn-md btn-soft btn-error flex-1">-1</button>
                 </form>
             </div>
         </div>
-        <br>
-        <br>
 
-        <!-- Loading new game -->
-        <form class="container text-center" action="/admin_dashboard/load_gamefile" method="post" enctype="multipart/form-data">
-            <p class="lead">Načíst gamefile do hry [ {{ loaded_game }} ]</p>
-            <input type="file" name="file" />
-            <input type="submit" value="Upload">
-        </form>
+        <!-- Green team -->
+        <div class="stat flex-1">
+            <div class="flex items-center">
+                <button class="btn btn-success btn-circle h-8 w-8"></button>
+                <div class="ml-3">
+                    <div class="stat-title">Zelení</div>
+                    <div class="stat-value">{{ g }}</div>
+                    <div class="stat-desc">bodů</div>
+                </div>
+            </div>
+            <div class="stat-actions mt-4 w-full">
+                <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2 w-full">
+                    <button type="submit" name="points" value="g+" class="btn btn-md btn-success flex-1">+1</button>
+                    <button type="submit" name="points" value="g-" class="btn btn-md btn-soft btn-success flex-1">-1</button>
+                </form>
+            </div>
+        </div>
 
-        <!-- Create gamefiles -->
-        <div style="height: 1cm;"></div>
-        <form class="container text-center" action="/admin_dashboard/load_questionslist" method="post" enctype="multipart/form-data">
-            <p class="lead">Generovat gamefiles.</p>
-            <p><i>Generování není deterministické a přestává fungovat kolem 70 % celkového počtu otázek.</br>
-                Když se generování nepovede zkuste to znovu, snižte požadavky, nebo vymyslete další otázky.</i></p>
-            <input type="file" name="file" style="width: 20em;"/></br>
-            <input type="text" placeholder="počet her" class="mt-1" name="NUMEBR_OF_GAMEFILES" style="width: 20em;" /></br>
-            <input type="text" placeholder="počet předmětů (řádků)" class="mt-1" name="NUMEBR_OF_SUBJECTS_IN_GAMEFILE" style="width: 20em;"/></br>
-            <input type="text" placeholder="počet otázek (sloupců)" class="mt-1" name="NUMBER_OF_QUESTIONS_PER_SUBJECT" style="width: 20em;"/></br>
-            <input onclick="showSpinner()" type="submit" value="Generate gamefiles" class="mt-1" style="width: 20em;">
-            <div style="display: none;" id="spinner" class="mt-2 container text-center spinner-border text-primary" role="status"></div>
-        </form>
+        <!-- Blue team -->
+        <div class="stat flex-1">
+            <div class="flex items-center">
+                <button class="btn btn-primary btn-circle h-8 w-8"></button>
+                <div class="ml-3">
+                    <div class="stat-title">Modří</div>
+                    <div class="stat-value">{{ b }}</div>
+                    <div class="stat-desc">bodů</div>
+                </div>
+            </div>
+            <div class="stat-actions mt-4 w-full">
+                <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2 w-full">
+                    <button type="submit" name="points" value="b+" class="btn btn-md btn-primary flex-1">+1</button>
+                    <button type="submit" name="points" value="b-" class="btn btn-md btn-soft btn-primary flex-1">-1</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
-        <script>
-        function showSpinner() {
-            var spinner = document.getElementById("spinner");
-            spinner.style.display = "block";
-            setTimeout(hideSpinner, 6000); // There is a second sleep to trigger the spinner in flask_app.py. I have shamed the honor of my familly with this code.
-        }
+<!--&lt;!&ndash; Team score display &ndash;&gt;-->
+<!--<div class="grid grid-cols-3 gap-4 my-8">-->
+<!--    <div class="card bg-base-100 shadow-xl">-->
+<!--        <div class="card-body items-center text-center">-->
+<!--            <div class="rounded-full bg-red-500 h-6 w-6 mb-2"></div>-->
+<!--            <h2 class="card-title">Červený tým</h2>-->
+<!--            <div class="text-4xl font-bold">{{ r }}</div>-->
+<!--        </div>-->
+<!--    </div>-->
 
-        function hideSpinner() {
-            var spinner = document.getElementById("spinner");
-            spinner.style.display = "none";
-        }
-        </script>
+<!--    <div class="card bg-base-100 shadow-xl">-->
+<!--        <div class="card-body items-center text-center">-->
+<!--            <div class="rounded-full bg-green-500 h-6 w-6 mb-2"></div>-->
+<!--            <h2 class="card-title">Zelený tým</h2>-->
+<!--            <div class="text-4xl font-bold">{{ g }}</div>-->
+<!--        </div>-->
+<!--    </div>-->
 
-    </main>
+<!--    <div class="card bg-base-100 shadow-xl">-->
+<!--        <div class="card-body items-center text-center">-->
+<!--            <div class="rounded-full bg-blue-500 h-6 w-6 mb-2"></div>-->
+<!--            <h2 class="card-title">Modrý tým</h2>-->
+<!--            <div class="text-4xl font-bold">{{ b }}</div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Adding/subtracting points &ndash;&gt;-->
+<!--<div class="grid grid-cols-3 gap-4 my-8">-->
+<!--    <div class="flex flex-col items-center">-->
+<!--        <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2">-->
+<!--            <button type="submit" name="points" value="r+" class="btn btn-outline btn-error">+1</button>-->
+<!--            <button type="submit" name="points" value="r-" class="btn btn-outline btn-error">-1</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+<!--    <div class="flex flex-col items-center">-->
+<!--        <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2">-->
+<!--            <button type="submit" name="points" value="g+" class="btn btn-outline btn-success">+1</button>-->
+<!--            <button type="submit" name="points" value="g-" class="btn btn-outline btn-success">-1</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+<!--    <div class="flex flex-col items-center">-->
+<!--        <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2">-->
+<!--            <button type="submit" name="points" value="b+" class="btn btn-outline btn-primary">+1</button>-->
+<!--            <button type="submit" name="points" value="b-" class="btn btn-outline btn-primary">-1</button>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!-- Divider -->
+<div class="divider"></div>
+
+<!-- Game management section -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-8">
+    <!-- Load game file -->
+    <div class="card rounded-xl overflow-hidden border border-gray-300">
+        <div class="card-body">
+            <h2 class="card-title">Aktuální hra: {{ loaded_game }}</h2>
+            <p>Načíst nový gamefile do hry. Gamefile je soubor ve specifickém formátu, který defunuje jedno kolo hry včetně otázek a tajenky.</p>
+
+            <form action="/admin_dashboard/load_gamefile" method="post" enctype="multipart/form-data"
+                  class="form-control w-full">
+                <div class="flex flex-col gap-4">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Soubor hry</span>
+                        </label>
+                        <input type="file" name="file" class="file-input file-input-bordered w-full"/>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-soft">Nahrát soubor</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Generate gamefiles -->
+    <div class="card rounded-xl overflow-hidden border border-gray-300">
+        <div class="card-body">
+            <h2 class="card-title">Generování gamefiles</h2>
+            <p class="text-sm opacity-70">Generování není deterministické a přestává fungovat kolem 70% celkového počtu
+                otázek. Když se generování nepovede, zkuste to znovu, snižte požadavky nebo vymyslete další otázky.</p>
+
+            <form action="/admin_dashboard/load_questionslist" method="post" enctype="multipart/form-data"
+                  class="form-control w-full">
+
+                <div class="flex flex-col gap-3 mt-2">
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">CSV soubor s otázkami</span>
+                        </label>
+                        <input type="file" name="file" class="file-input file-input-bordered w-full"/>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Počet her</span>
+                        </label>
+                        <input type="text" name="NUMBER_OF_GAMEFILES"
+                               class="input input-bordered w-full"/>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Počet předmětů (řádků)</span>
+                        </label>
+                        <input type="text" name="NUMBER_OF_SUBJECTS_IN_GAMEFILE"
+                               class="input input-bordered w-full"/>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Počet otázek (sloupců)</span>
+                        </label>
+                        <input type="text" name="NUMBER_OF_QUESTIONS_PER_SUBJECT"
+                               class="input input-bordered w-full"/>
+                    </div>
+
+                    <button id="submitBtn" onclick="handleFormSubmit(event)" type="submit" class="btn btn-soft btn-primary">
+                        <span id="buttonText">Generovat gamefiles</span>
+                        <span id="spinner" class="loading loading-spinner loading-md hidden"></span>
+                    </button>
+                </div>
+            </form>
+
+            <!-- Modal for showing output -->
+            <dialog id="outputModal" class="modal">
+                <div class="modal-box">
+                    <h3 class="font-bold text-lg">Výstup generování</h3>
+
+                    <pre id="modalOutput" class="bg-base-200 p-4 mt-4 rounded-lg text-sm overflow-auto max-h-96"></pre>
+
+                    <div id="downloadSection" class="mt-4 hidden">
+                        <div class="alert alert-success">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none"
+                                 viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>Gamefiles byly úspěšně vygenerovány!</span>
+                        </div>
+                        <a id="downloadLink" href="#" class="btn btn-outline w-full mt-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
+                                 stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                            </svg>
+                            Stáhnout vygenerovaný soubor
+                        </a>
+                    </div>
+
+                    <div class="modal-action">
+                        <form method="dialog">
+                            <button class="btn w-full mt-2">Zavřít</button>
+                        </form>
+                    </div>
+                </div>
+            </dialog>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function handleFormSubmit(event) {
+        event.preventDefault();
+
+        const spinner = document.getElementById("spinner");
+        const buttonText = document.getElementById("buttonText");
+        const submitBtn = document.getElementById("submitBtn");
+        const form = event.target.closest("form");
+        const formData = new FormData(form);
+        const modalOutput = document.getElementById("modalOutput");
+        const downloadSection = document.getElementById("downloadSection");
+
+        // Show spinner
+        spinner.classList.remove("hidden");
+        buttonText.classList.add("hidden");
+        submitBtn.classList.add("btn-disabled");
+
+        // Submit form and capture output
+        fetch('/admin_dashboard/generate_gamefiles', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Display logs in the modal
+                modalOutput.textContent = data.logs;
+
+                // Show/hide download section based on downloadable status
+                if (data.downloadable && data.filename) {
+                    downloadSection.classList.remove("hidden");
+                    document.getElementById("downloadLink").href = `/admin_dashboard/download/${data.filename}`;
+
+                    // Get the alert element and message span
+                    const alertElement = document.querySelector("#downloadSection .alert");
+                    const alertMessage = document.querySelector("#downloadSection .alert span");
+
+                    // Update alert style and message based on status
+                    if (data.status === "success") {
+                        alertElement.className = "alert alert-success";
+                        alertMessage.textContent = "Gamefiles byly úspěšně vygenerovány!";
+                    } else if (data.status === "partial") {
+                        alertElement.className = "alert alert-warning";
+                        alertMessage.textContent = `Částečný úspěch: Vygenerováno ${data.num_files} gamefiles.`;
+                        // modalOutput.textContent += "\n\nWarning: Generation encountered errors but some files were created.";
+                    }
+                } else {
+                    downloadSection.classList.add("hidden");
+                    if (data.status === "error") {
+                        modalOutput.textContent += "\n\nGeneration failed. No file was generated.";
+                    }
+                }
+
+                // Show modal
+                document.getElementById('outputModal').showModal();
+            })
+            .catch(error => {
+                modalOutput.textContent = "Error processing request: " + error;
+                downloadSection.classList.add("hidden");
+                document.getElementById('outputModal').showModal();
+            })
+            .finally(() => {
+                // Ensure spinner is hidden
+                spinner.classList.add("hidden");
+                buttonText.classList.remove("hidden");
+                submitBtn.classList.remove("btn-disabled");
+            });
+    }
+
+    function resetButton() {
+        const spinner = document.getElementById("spinner");
+        const buttonText = document.getElementById("buttonText");
+        const submitBtn = document.getElementById("submitBtn");
+
+        spinner.classList.add("hidden");
+        buttonText.classList.remove("hidden");
+        submitBtn.classList.remove("btn-disabled");
+    }
+</script>
 </body>
 </html>
