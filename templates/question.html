@@ -2,111 +2,189 @@
 <html lang=cs>
 
 <head>
-  <meta charset=utf-8>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
-  <script src="{{ url_for('static',filename='scripts/timer.js') }}"></script>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/turn.css') }}">
-  <title>Vědomostní soutěž - otázka</title>
+    <meta charset=utf-8>
+
+    <!-- Daisy + Tailwind + Darkmode -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => !localStorage.getItem('theme') && document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light'));</script>
+
+    <title>Vědomostní soutěž - otázka</title>
 </head>
 
-<body class="container">
-  <!-- Header -->
-  <h1 class="mt-4 lead text-center">{{ category_name }}</h1>
-  
-  <!-- Flipcard -->
-  <!-- Flipping by Anad Vunnam https://bbbootstrap.com/snippets/bootstrap-5-flipping-cards-for-catalog-29291738-->
-  <div class="container p-4" style="width: 70%;">
-    <div class="box">
-      <div class="body">
-        <!-- Question -->
-        <div class="contentd-flex flex-column align-items-center justify-content-center bg-white align-middle">
-          <div class="container border border-dark border-2 rounded p-4">
-            <div class="lead" style="height: 250px; display: flex; justify-content: center; align-items: center; font-size: 30px;">{{ question_text }}</div>
-          </div>
-        </div>
-        <!-- Answer -->
-        <div class="content d-flex flex-column align-items-center justify-content-center">
-          <div class="rounded p-4" style="height: 80%; width: 80%;">
-            <h3 class="text-white fs-5">Správná odpověď:</h3>
-            <p class="text-white" style="font-size: 30px;">{{ question_answer }}</p>
-          </div>
+<body>
+<!-- Header -->
+<h1 class="mt-20 mb-15 text-center text-6xl font-bold">{{ category_name }}</h1>
+
+<!-- Question/Answer Card -->
+<div class="flex justify-center w-full">
+    <div id="card-content" class="card w-full max-w-4xl bg-base-100 border border-gray-300 rounded-xl">
+        <!-- Front/back card with flip functionality -->
+        <div class="card-body min-h-[300px] flex items-center justify-center text-center">
+            <!-- Question shown by default -->
+            <div id="question" class="text-3xl font-medium">
+                {{ question_text }}
+            </div>
+
+            <!-- Answer hidden by default -->
+            <div id="answer" class="hidden">
+                <h3 class="text-xl mb-2">Správná odpověď:</h3>
+                <p class="text-3xl font-medium">{{ question_answer }}</p>
+            </div>
         </div>
 
-      </div>
+        <div class="card-actions justify-center pb-4">
+            <button onclick="toggleAnswer()" class="btn btn-primary btn-soft">Zobrazit odpověď</button>
+        </div>
     </div>
-    <br>
-    <br>
+</div>
 
-    <!-- Adding points for correct answer -->
-    <div class="container text-center" style="max-width: fit-content;">
-      <div class="row">
 
-        <!-- <div class="col lead d-flex align-items-center">Red</div> -->
-
-        <!-- Add +1 to red -->
-        <div class="col">
-          <form method="post" action="{{ server }}/">
-            <input type="hidden" value="r+" name="points" />
-            <button type="submit" class="btn btn-outline-danger btn-lg border-2 rounded"
-              style="width: 110px">R +1</button>
-          </form>
-        </div>
-
-        <!-- Add +1 to green -->
-        <div class="col">
-          <form method="post" action="{{ server }}/">
-            <div class="text-center">
-              <input type="hidden" value="g+" name="points" />
-              <button type="submit" class="btn btn-outline-success btn-lg border-2 rounded"
-                style="width: 110px">G +1</button>
-            </div>
-          </form>
-        </div>
-        <!-- <div class="col lead d-flex align-items-center">Green</div> -->
-
-        <!-- Add +1 to blue -->
-        <div class="col">
-          <form method="post" action="{{ server }}/">
-            <div class="text-center">
-              <input type="hidden" value="b+" name="points" />
-              <button type="submit" class="btn btn-outline-primary btn-lg border-2 rounded"
-                style="width: 110px">B +1</button>
-            </div>
-          </form>
-        </div>
-        <!-- <div class="col lead d-flex align-items-center">Blue</div> -->
-        
-
-        <!-- Add +1 to noone -->
-        <div class="col">
-          <form method="get" action="{{ server }}/">
-            <button type="submit" class="btn btn-outline-secondary btn-lg border-2 rounded" style="width: 110px;"> –⁠
+<div class="flex justify-center w-full mt-10">
+    <div class="stats rounded-xl overflow-hidden border border-gray-300">
+        <!-- Timer stat -->
+        <div class="stat flex-1 flex flex-col items-center justify-center">
+            <div class="stat-title">Časovač</div>
+            <button id="toggle-timer" class="mb-2 w-full">
+                <span class="countdown font-mono text-4xl">
+                  <span id="timer-value" style="--value:0;"></span>
+                </span>
             </button>
-          </form>
         </div>
 
-      </div>
-
-      <div class="row"></div>
-
-      <div class="row mt-4">
-        <div class="col">
-          <button class="btn btn-outline-secondary btn-lg border-2 rounded" style="width: 330px;" id="timer" onclick="reset()">časovač</button> 
+        <!-- Red team -->
+        <div class="stat flex-1">
+            <div class="flex items-center">
+                <button class="btn btn-error btn-circle h-8 w-8"></button>
+                <div class="ml-3">
+                    <div class="stat-title">Červení</div>
+                    <div class="stat-actions mt-2 w-full">
+                        <form method="post" action="{{ server }}/">
+                            <input type="hidden" value="r+" name="points"/>
+                            <button type="submit" class="btn btn-md btn-outline btn-error w-full min-w-20">+1</button>
+                        </form>
+                        <div class="stat-desc mt-1">bod</div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+
+        <!-- Green team -->
+        <div class="stat flex-1">
+            <div class="flex items-center">
+                <button class="btn btn-success btn-circle h-8 w-8"></button>
+                <div class="ml-3">
+                    <div class="stat-title">Zelení</div>
+                    <div class="stat-actions mt-2 w-full">
+                        <form method="post" action="{{ server }}/">
+                            <input type="hidden" value="g+" name="points"/>
+                            <button type="submit" class="btn btn-md btn-outline btn-success w-full min-w-20">+1</button>
+                        </form>
+                        <div class="stat-desc  mt-1">bod</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blue team -->
+        <div class="stat flex-1">
+            <div class="flex items-center">
+                <button class="btn btn-primary btn-circle h-8 w-8"></button>
+                <div class="ml-3">
+                    <div class="stat-title">Modří</div>
+                    <div class="stat-actions mt-2 w-full">
+                        <form method="post" action="{{ server }}/">
+                            <input type="hidden" value="b+" name="points"/>
+                            <button type="submit" class="btn btn-md btn-outline btn-primary min-w-20">+1</button>
+                        </form>
+                        <div class="stat-desc mt-1">bod</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Return button -->
+<!--        <div class="stat flex-1 px-2">-->
+<!--            <form method="get" action="{{ server }}/" class="h-full">-->
+<!--                <button type="submit" class="btn btn-ghost h-full w-full">⮐</button>-->
+<!--            </form>-->
+<!--        </div>-->
+
+        <form method="get" action="{{ server }}/" class="h-full">
+            <button type="submit" class="btn btn-ghost btn-lg border-2 rounded w-full h-full text-bold text-lg">←</button>
+        </form>
 
     </div>
+</div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const timerValue = document.getElementById('timer-value');
+        const toggleBtn = document.getElementById('toggle-timer');
+        let count = 0;
+        let timerInterval = null;
+        let isRunning = false;
 
+        toggleBtn.addEventListener('mousedown', function() {
+            if (isRunning) {
+                // Reset timer
+                clearInterval(timerInterval);
+                count = 0;
+                updateTimerDisplay(count);
+                isRunning = true;
 
-  </div>
+                timerInterval = setInterval(function() {
+                    count++;
+                    updateTimerDisplay(count);
+                }, 1000);
+            } else {
+                // Start timer
+                count = 0;
+                updateTimerDisplay(count);
+                isRunning = true;
+                toggleBtn.classList.add('btn-active');
 
+                timerInterval = setInterval(function() {
+                    count++;
+                    updateTimerDisplay(count);
+                }, 1000);
+            }
+        });
 
+        function updateTimerDisplay(value) {
+            timerValue.style.setProperty('--value', value);
+        }
+    });
+</script>
 
+<!-- JavaScript for toggling answer and timer -->
+<script>
+    function toggleAnswer() {
+        const question = document.getElementById('question');
+        const answer = document.getElementById('answer');
+        const card = document.getElementById('card-content');
+
+        if (question.classList.contains('hidden')) {
+            // Switch back to question
+            question.classList.remove('hidden');
+            answer.classList.add('hidden');
+            card.classList.remove('bg-slate-50');
+        } else {
+            // Switch to answer
+            question.classList.add('hidden');
+            answer.classList.remove('hidden');
+            card.classList.add('bg-slate-50');
+        }
+    }
+
+    // Import the timer functionality
+    document.addEventListener('DOMContentLoaded', function () {
+        // Load timer script if it exists
+        const timerScript = document.createElement('script');
+        timerScript.src = "{{ url_for('static',filename='scripts/timer.js') }}";
+        document.head.appendChild(timerScript);
+    });
+</script>
 </body>
-
 </html>
