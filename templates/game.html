@@ -2,79 +2,108 @@
 <html lang=cs>
 
 <head>
-  <meta charset=utf-8>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
-  <title>Vědomostní soutěž</title>
+    <meta charset=utf-8>
+
+    <!-- Daisy + Tailwind + Darmode -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')); window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => !localStorage.getItem('theme') && document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light'));</script>
+
+    <title>Vědomostní soutěž</title>
 </head>
 
 <body>
-  <!-- Heading -->
-  <h1 class="mt-4 display-1 text-center">{{ game_name }}</h1>
-  <br>
+<!-- Heading -->
+<h1 class="mt-20 mb-10 text-center text-6xl font-bold">{{ game_name }}</h1>
+<br>
 
-  <!-- Gameboard <div class="container border border-dark border-2 rounded p-4" style="max-width: 70%;"> -->
-  <div class="container border border-dark border-2 rounded p-4">
-    <!-- CATEGORIES - For loop logic of jinja template -->
-    {%for i in range(0, nr_categories)%}
-    <div class="row align-items-center">
-      <div class="col lead text-end">{{ categories[i].category_text }}</div>
-      <!-- QUESTIONS - For loop logic of jinja template -->
-      {%for j in range(0, categories[i].nr_questions )%}
-      <div class="col">
-        <form method="post" action="{{ server }}question">
-          <input type="hidden" value="{{ i }}" name="cat" />
-          <input type="hidden" value="{{ j }}" name="question" />
-          {% if categories[i].questions[j].seen %}
-          <!-- Visited -->
-          <input type="submit" class="col-md-auto btn btn-link align-items-center p-2 text-secondary" style="text-decoration: none;" value="Otázka {{ j + 1 }}" />
-          {% else %}
-          <!-- Not-visited -->
-          <input type="submit" class="col-md-auto btn btn-link align-items-center p-2 fw-bold" style="text-decoration: none;" value="Otázka {{ j + 1 }}" />
-          {% endif %}
-        </form>
-      </div>
-      {%endfor%}
+<!-- Gameboard <div class="container border border-dark border-2 rounded p-4" style="max-width: 70%;"> -->
+<div class="flex justify-center items-center">
+    <div class="overflow-x-auto w-full max-w-4xl rounded-xl">
+        <div class="rounded-xl overflow-hidden border border-gray-300">
+            <table class="table w-full">
+                <!-- Table Header -->
+                <tbody>
+                <!-- CATEGORIES - For loop logic of Jinja template -->
+                {% for i in range(0, nr_categories) %}
+                <tr>
+                    <!-- Category Name -->
+                    <td class="font-bold text-lg text-center">{{ categories[i].category_text }}</td>
+                    <!-- QUESTIONS - For loop logic of Jinja template -->
+                    {% for j in range(0, categories[i].nr_questions) %}
+                    <td class="text-center">
+                        <form method="post" action="{{ server }}question">
+                            <input type="hidden" value="{{ i }}" name="cat"/>
+                            <input type="hidden" value="{{ j }}" name="question"/>
+                            {% if categories[i].questions[j].seen %}
+                            <!-- Visited -->
+                            <input type="submit" class="btn btn-md btn-dash text-gray-500"
+                                   value="{{ j + 1 }}. otázka"/>
+                            {% else %}
+                            <!-- Not-visited -->
+                            <input type="submit" class="btn btn-md btn-soft btn-primary" value="{{ j + 1 }}. otázka"/>
+                            {% endif %}
+                        </form>
+                    </td>
+                    {% endfor %}
+                    <!-- Fill empty cells if fewer questions -->
+                    {% for _ in range(categories[i].nr_questions|default(0), max_questions|default(0)) %}
+                    <td class="text-center"></td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-    {%endfor%}
-  </div>
-  <br>
-  <br>
-  
-  <!-- Current game points -->
-  <div class="container text-center " style="max-width: fit-content;">
-    <div class="row">
+</div>
 
-      <!-- <div class="col lead d-flex align-items-center">Red</div> -->
 
-      <div class="col">
-        <button type="button" class="btn btn-outline-danger btn-lg border-2 rounded" style="width: 110px" disabled>R {{ r }}</button>
-      </div>
+<br>
+<br>
 
-      <div class="col">
-        <button type="button" class="btn btn-outline-success btn-lg border-2 rounded" style="width: 110px;" disabled>G {{ g }}</button>
-      </div>
+<!-- Current game points -->
+<div class="flex justify-center w-full">
+    <div class="stats rounded-xl overflow-hidden border border-gray-300">
+        <div class="stat w-40">
+            <div class="stat-figure text-secondary">
+                <div class="stat-figure text-warning">
+                    <button class="btn btn-error btn-circle h-8 w-8 mr-5"></button>
+                </div>
+            </div>
+            <div class="stat-title">Červení</div>
+            <div class="stat-value">{{ r }}</div>
+            <div class="stat-desc">bodů</div>
+        </div>
 
-      <!-- <div class="col lead d-flex align-items-center">Green</div> -->
+        <div class="stat w-40">
+            <div class="stat-figure text-secondary">
+                <div class="stat-figure text-warning">
+                    <button class="btn btn-success btn-circle h-8 w-8 mr-5"></button>
+                </div>
+            </div>
+            <div class="stat-title">Zelení</div>
+            <div class="stat-value">{{ g }}</div>
+            <div class="stat-desc">bodů</div>
+        </div>
 
-      <div class="col">
-        <button type="button" class="btn btn-outline-primary btn-lg border-2 rounded" style="width: 110px;" disabled>B {{ b }}</button>
-      </div>
+        <div class="stat w-40">
+            <div class="stat-figure text-secondary">
+                <div class="stat-figure text-warning">
+                    <button class="btn btn-primary btn-circle h-8 w-8 mr-5"></button>
+                </div>
+            </div>
+            <div class="stat-title">Modří</div>
+            <div class="stat-value">{{ b }}</div>
+            <div class="stat-desc">bodů</div>
+        </div>
 
-      <!-- <div class="col lead d-flex align-items-center">Blue</div> -->
-
-      <div class="col">
-        <form method="get" action="{{ server }}/">
-          <button type="submit" class="btn btn-outline-secondary btn-lg border-2 rounded" style="width:fit-content;">↺</button>
+        <form method="get" action="{{ server }}/" class="h-full">
+            <button type="submit" class="btn btn-ghost btn-lg border-2 rounded w-full h-full">↺</button>
         </form>
-      </div>
-
 
     </div>
-  </div>
+</div>
 
 </body>
 

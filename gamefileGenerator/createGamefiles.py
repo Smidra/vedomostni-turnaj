@@ -124,7 +124,7 @@ class Databank:
     def try_to_retire_subject(self, subject_index, questions_per_subject):
         if self.subjects[subject_index].nr_available_questions < questions_per_subject:
             # Retire, not enough questions
-            print(">>> Retiring", self.subjects[subject_index].name)
+            # print(">>> Retiring", self.subjects[subject_index].name)
             copy_of_retiring_subject = copy.deepcopy(self.subjects[subject_index])
             self.retired_subjects.append(copy_of_retiring_subject)
             self.subjects.pop(subject_index)
@@ -215,26 +215,29 @@ class Databank:
 
 def generate_gamefiles(FILE_NAME,
                        OUTPUT_NAME,
-                       NUMEBR_OF_GAMEFILES, 
-                       NUMEBR_OF_SUBJECTS_IN_GAMEFILE,
+                       NUMBER_OF_GAMEFILES,
+                       NUMBER_OF_SUBJECTS_IN_GAMEFILE,
                        NUMBER_OF_QUESTIONS_PER_SUBJECT):
     banka = Databank()
     banka.OUTPUT_NAME = OUTPUT_NAME
     banka.load_from_csv(FILE_NAME)
+    generation_error = False  # Track if there was any error during generation
 
     # Try to create the gamefiles
     try:
-        for i in range(0, NUMEBR_OF_GAMEFILES):
-            banka.create_gamefile(i,NUMEBR_OF_SUBJECTS_IN_GAMEFILE, NUMBER_OF_QUESTIONS_PER_SUBJECT)
-            print("-------------------------------")
-    except:
+        for i in range(0, NUMBER_OF_GAMEFILES):
+            banka.create_gamefile(i,NUMBER_OF_SUBJECTS_IN_GAMEFILE, NUMBER_OF_QUESTIONS_PER_SUBJECT)
+            # print("-------------------------------")
+            print("> Gamefile", i, "created successfully.")
+    except Exception as e:
         print("Crash loop back off!\n\
         This run was not able to fulfill the requirements with the specified CSV file\n\
         How to fix?\n\
         1) Run it again. Maybe it was a close call but the odds were not in your favour.\n\
         2) Add more subjects and questions into the CSV file.\n\
         3) Relax the requirements. Try to require less questions/subjects in each gamefile.")
-    
+        generation_error = True
+
     # Retire all other unused subjects into unused questions
     try:
         banka.retire_all()
@@ -242,10 +245,22 @@ def generate_gamefiles(FILE_NAME,
         print("Error when retiring subjects.")
 
     # Export to XLSX
+    export_error = False
     try:
         banka.export_to_xlsx()
     except:
         print("Error when exporting to xlsx.")
+        export_error = True
 
-    print("Number of gamefiles written:", len(banka.gamefile_list))
-    print("--- Gamefile generation finished ---")
+    # Count how many gamefiles were written
+    gamefiles_written = len(banka.gamefile_list)
+    print("-------------------------------")
+    print("Number of gamefiles written:", gamefiles_written)
+    print("-------------------------------")
+
+    print("> Gamefile generation finished.")
+
+    # Consider it a success if any gamefiles were written and export worked
+    success = gamefiles_written > 0 and not export_error
+
+    return success, gamefiles_written, generation_error

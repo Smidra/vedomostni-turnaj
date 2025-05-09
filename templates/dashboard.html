@@ -4,37 +4,51 @@
 <head>
     <meta charset=utf-8>
     <meta http-equiv="refresh" content="2">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
+
+    <!-- Daisy + Tailwind + Darmode -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')); window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => !localStorage.getItem('theme') && document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light'));</script>
+
     <title>{{name}} dashboard</title>
 </head>
 
 <body>
-    <main class="container">
-        <!-- Headning -->
-        <h1 class="mt-5 display-1 text-center">{{ name }}</h1>
-        <br>
+<!-- Headning -->
+<h1 class="mt-20 mb-10 text-center text-6xl font-bold text-{{ color }}">{{ name }}</h1>
+<br>
 
-        <!-- Partial secret -->
-        <div class="row text-center">
-            <div class="col">
-                <div class="mt-5 display-1 "><code class="text-{{ color }}">{{ partial_secret }}</code></div>
-            </div>
+<div class="row text-center">
+    <div class="col">
+        <div class="flex justify-center gap-2 my-5">
+            {% for char in partial_secret %}
+            <kbd class="kbd kbd-xl text-bold h-15 text-4xl">{{ char }}</kbd>
+            {% endfor %}
         </div>
-        <br>
-        <br>
+    </div>
+</div>
+<br>
+<br>
 
-        <!-- Current points -->
-        <div class="row text-center">
-            <div class="col">
-                <button type="button" class="btn btn-outline-{{ color }} btn-lg border-2 rounded" style="width: 110px" disabled>{{ points }}</button>
+<!-- Current points -->
+<div class="flex justify-center w-full">
+    <div class="stats rounded-xl overflow-hidden border border-gray-300">
+        <div class="stat w-40">
+            <div class="stat-figure text-secondary">
+                <div class="stat-figure text-warning">
+                    <button class="btn btn-{{ color }} btn-circle h-8 w-8 mr-3"></button>
+                </div>
             </div>
+            <div class="stat-title">{{ name }}</div>
+            <div class="stat-value">{{ points }}</div>
+            <div class="stat-desc">bodů</div>
         </div>
+        <!--                <form method="get" action="{{ server }}" class="h-full">-->
+        <!--                    <button type="submit" class="btn btn-ghost btn-lg border-2 rounded w-full h-full">↺</button>-->
+        <!--                </form>-->
 
-    </main>
+    </div>
+</div>
+
 </body>
-
 </html>

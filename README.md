@@ -102,6 +102,7 @@ Hra bude spuštěna na http://0.0.0.0:5050
 # Development hry
 
 ```
+pip install -r requirements.txt
 FLASK_APP="flask_app.py" flask run
 ```
 
