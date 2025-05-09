@@ -65,37 +65,37 @@
 <!-- Current game points -->
 <div class="flex justify-center w-full">
     <div class="stats rounded-xl overflow-hidden border border-gray-300">
-        <div class="stat w-40">
-            <div class="stat-figure text-secondary">
-                <div class="stat-figure text-warning">
-                    <button class="btn btn-error btn-circle h-8 w-8 mr-5"></button>
+        <div class="stat flex-1">
+            <div class="flex items-center ml-5 mr-5">
+                <button class="btn btn-error btn-circle h-8 w-8"></button>
+                <div class="ml-3">
+                    <div class="stat-title">Červení</div>
+                    <div class="stat-value">{{ r }}</div>
+                    <div class="stat-desc">bodů</div>
                 </div>
             </div>
-            <div class="stat-title">Červení</div>
-            <div class="stat-value">{{ r }}</div>
-            <div class="stat-desc">bodů</div>
         </div>
 
-        <div class="stat w-40">
-            <div class="stat-figure text-secondary">
-                <div class="stat-figure text-warning">
-                    <button class="btn btn-success btn-circle h-8 w-8 mr-5"></button>
+        <div class="stat flex-1">
+            <div class="flex items-center  ml-5 mr-5">
+                <button class="btn btn-success btn-circle h-8 w-8"></button>
+                <div class="ml-3">
+                    <div class="stat-title">Zelení</div>
+                    <div class="stat-value">{{ g }}</div>
+                    <div class="stat-desc">bodů</div>
                 </div>
             </div>
-            <div class="stat-title">Zelení</div>
-            <div class="stat-value">{{ g }}</div>
-            <div class="stat-desc">bodů</div>
         </div>
 
-        <div class="stat w-40">
-            <div class="stat-figure text-secondary">
-                <div class="stat-figure text-warning">
-                    <button class="btn btn-primary btn-circle h-8 w-8 mr-5"></button>
+        <div class="stat flex-1">
+            <div class="flex items-center  ml-5 mr-5">
+                <button class="btn btn-primary btn-circle h-8 w-8"></button>
+                <div class="ml-3">
+                    <div class="stat-title">Modří</div>
+                    <div class="stat-value">{{ b }}</div>
+                    <div class="stat-desc">bodů</div>
                 </div>
             </div>
-            <div class="stat-title">Modří</div>
-            <div class="stat-value">{{ b }}</div>
-            <div class="stat-desc">bodů</div>
         </div>
 
         <form method="get" action="{{ server }}/" class="h-full">

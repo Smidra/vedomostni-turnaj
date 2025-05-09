@@ -18,56 +18,117 @@
     <a href="">Administrace</a>
 </h1>
 
-<!-- Team score display -->
-<div class="grid grid-cols-3 gap-4 my-8">
-    <div class="card bg-base-100 shadow-xl">
-        <div class="card-body items-center text-center">
-            <div class="rounded-full bg-red-500 h-6 w-6 mb-2"></div>
-            <h2 class="card-title">Červený tým</h2>
-            <div class="text-4xl font-bold">{{ r }}</div>
+<!-- Team score display with points adjustment -->
+<!-- Team score display with points adjustment -->
+<!-- Team score display with points adjustment -->
+<div class="grid grid-cols-1 md:grid-cols-1 gap-8 my-8">
+    <div class="stats rounded-xl overflow-hidden border border-gray-300 w-full">
+        <!-- Red team -->
+        <div class="stat flex-1">
+            <div class="flex items-center">
+                <button class="btn btn-error btn-circle h-8 w-8"></button>
+                <div class="ml-3">
+                    <div class="stat-title">Červení</div>
+                    <div class="stat-value">{{ r }}</div>
+                    <div class="stat-desc">bodů</div>
+                </div>
+            </div>
+            <div class="stat-actions mt-4 w-full">
+                <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2 w-full">
+                    <button type="submit" name="points" value="r+" class="btn btn-md btn-outline btn-error flex-1">+1</button>
+                    <button type="submit" name="points" value="r-" class="btn btn-md btn-outline btn-error flex-1">-1</button>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <div class="card bg-base-100 shadow-xl">
-        <div class="card-body items-center text-center">
-            <div class="rounded-full bg-green-500 h-6 w-6 mb-2"></div>
-            <h2 class="card-title">Zelený tým</h2>
-            <div class="text-4xl font-bold">{{ g }}</div>
+        <!-- Green team -->
+        <div class="stat flex-1">
+            <div class="flex items-center">
+                <button class="btn btn-success btn-circle h-8 w-8"></button>
+                <div class="ml-3">
+                    <div class="stat-title">Zelení</div>
+                    <div class="stat-value">{{ g }}</div>
+                    <div class="stat-desc">bodů</div>
+                </div>
+            </div>
+            <div class="stat-actions mt-4 w-full">
+                <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2 w-full">
+                    <button type="submit" name="points" value="g+" class="btn btn-md btn-outline btn-success flex-1">+1</button>
+                    <button type="submit" name="points" value="g-" class="btn btn-md btn-outline btn-success flex-1">-1</button>
+                </form>
+            </div>
         </div>
-    </div>
 
-    <div class="card bg-base-100 shadow-xl">
-        <div class="card-body items-center text-center">
-            <div class="rounded-full bg-blue-500 h-6 w-6 mb-2"></div>
-            <h2 class="card-title">Modrý tým</h2>
-            <div class="text-4xl font-bold">{{ b }}</div>
+        <!-- Blue team -->
+        <div class="stat flex-1">
+            <div class="flex items-center">
+                <button class="btn btn-primary btn-circle h-8 w-8"></button>
+                <div class="ml-3">
+                    <div class="stat-title">Modří</div>
+                    <div class="stat-value">{{ b }}</div>
+                    <div class="stat-desc">bodů</div>
+                </div>
+            </div>
+            <div class="stat-actions mt-4 w-full">
+                <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2 w-full">
+                    <button type="submit" name="points" value="b+" class="btn btn-md btn-outline btn-primary flex-1">+1</button>
+                    <button type="submit" name="points" value="b-" class="btn btn-md btn-outline btn-primary flex-1">-1</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Adding/subtracting points -->
-<div class="grid grid-cols-3 gap-4 my-8">
-    <div class="flex flex-col items-center">
-        <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2">
-            <button type="submit" name="points" value="r+" class="btn btn-outline btn-error">+1</button>
-            <button type="submit" name="points" value="r-" class="btn btn-outline btn-error">-1</button>
-        </form>
-    </div>
+<!--&lt;!&ndash; Team score display &ndash;&gt;-->
+<!--<div class="grid grid-cols-3 gap-4 my-8">-->
+<!--    <div class="card bg-base-100 shadow-xl">-->
+<!--        <div class="card-body items-center text-center">-->
+<!--            <div class="rounded-full bg-red-500 h-6 w-6 mb-2"></div>-->
+<!--            <h2 class="card-title">Červený tým</h2>-->
+<!--            <div class="text-4xl font-bold">{{ r }}</div>-->
+<!--        </div>-->
+<!--    </div>-->
 
-    <div class="flex flex-col items-center">
-        <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2">
-            <button type="submit" name="points" value="g+" class="btn btn-outline btn-success">+1</button>
-            <button type="submit" name="points" value="g-" class="btn btn-outline btn-success">-1</button>
-        </form>
-    </div>
+<!--    <div class="card bg-base-100 shadow-xl">-->
+<!--        <div class="card-body items-center text-center">-->
+<!--            <div class="rounded-full bg-green-500 h-6 w-6 mb-2"></div>-->
+<!--            <h2 class="card-title">Zelený tým</h2>-->
+<!--            <div class="text-4xl font-bold">{{ g }}</div>-->
+<!--        </div>-->
+<!--    </div>-->
 
-    <div class="flex flex-col items-center">
-        <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2">
-            <button type="submit" name="points" value="b+" class="btn btn-outline btn-primary">+1</button>
-            <button type="submit" name="points" value="b-" class="btn btn-outline btn-primary">-1</button>
-        </form>
-    </div>
-</div>
+<!--    <div class="card bg-base-100 shadow-xl">-->
+<!--        <div class="card-body items-center text-center">-->
+<!--            <div class="rounded-full bg-blue-500 h-6 w-6 mb-2"></div>-->
+<!--            <h2 class="card-title">Modrý tým</h2>-->
+<!--            <div class="text-4xl font-bold">{{ b }}</div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--&lt;!&ndash; Adding/subtracting points &ndash;&gt;-->
+<!--<div class="grid grid-cols-3 gap-4 my-8">-->
+<!--    <div class="flex flex-col items-center">-->
+<!--        <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2">-->
+<!--            <button type="submit" name="points" value="r+" class="btn btn-outline btn-error">+1</button>-->
+<!--            <button type="submit" name="points" value="r-" class="btn btn-outline btn-error">-1</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+<!--    <div class="flex flex-col items-center">-->
+<!--        <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2">-->
+<!--            <button type="submit" name="points" value="g+" class="btn btn-outline btn-success">+1</button>-->
+<!--            <button type="submit" name="points" value="g-" class="btn btn-outline btn-success">-1</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+<!--    <div class="flex flex-col items-center">-->
+<!--        <form method="post" action="{{ server }}admin_dashboard" class="flex gap-2">-->
+<!--            <button type="submit" name="points" value="b+" class="btn btn-outline btn-primary">+1</button>-->
+<!--            <button type="submit" name="points" value="b-" class="btn btn-outline btn-primary">-1</button>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
 
 <!-- Divider -->
 <div class="divider"></div>
