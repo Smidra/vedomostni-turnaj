@@ -15,7 +15,7 @@
 
 <body>
 <!-- Header -->
-<h1 class="mt-20 mb-15 text-center text-6xl font-bold">{{ category_name }}</h1>
+<h1 class="mt-10 mb-10 text-center text-6xl font-bold">{{ category_name }}</h1>
 
 <!-- Question/Answer Card -->
 <div class="flex justify-center w-full">
@@ -41,7 +41,7 @@
 </div>
 
 
-<div class="flex justify-center w-full mt-10">
+<div class="flex justify-center w-full mt-8">
     <div class="stats rounded-xl overflow-hidden border border-gray-300">
         <!-- Timer stat -->
         <div class="stat flex-1 flex flex-col items-center justify-center">
@@ -103,13 +103,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Return button -->
-<!--        <div class="stat flex-1 px-2">-->
-<!--            <form method="get" action="{{ server }}/" class="h-full">-->
-<!--                <button type="submit" class="btn btn-ghost h-full w-full">⮐</button>-->
-<!--            </form>-->
-<!--        </div>-->
 
         <form method="get" action="{{ server }}/" class="h-full">
             <button type="submit" class="btn btn-ghost btn-lg border-2 rounded w-full h-full text-bold text-lg">←</button>
@@ -176,9 +169,8 @@
                 setTimeout(() => question.classList.remove('opacity-0'), 50);
                 answer.classList.add('hidden');
 
-                // Change background
-                card.classList.remove('bg-slate-100');
-                card.classList.add('bg-white');
+                // Change background - remove answer background
+                card.classList.remove('bg-base-200');
 
                 // Update button style and text
                 answerBtn.textContent = 'Zobrazit odpověď';
@@ -195,9 +187,8 @@
                 answer.classList.remove('hidden');
                 setTimeout(() => answer.classList.remove('opacity-0'), 50);
 
-                // Change background
-                card.classList.remove('bg-white');
-                card.classList.add('bg-slate-100');
+                // Change background - add theme-appropriate background
+                card.classList.add('bg-base-200');
 
                 // Update button style and text;
                 answerBtn.textContent = 'Zpět na otázku';

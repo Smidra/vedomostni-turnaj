@@ -67,7 +67,6 @@ Working directory: /home/smidra/
 WSGI configuration file: /var/www/smidra_pythonanywhere_com_wsgi.py
 Python version: 3.13
 Force HTTPS: Enable
-
 ```
 
 A to WSGI (/var/www/smidra_pythonanywhere_com_wsgi.py) vypadá takto:
