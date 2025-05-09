@@ -19,23 +19,23 @@
 
 <!-- Question/Answer Card -->
 <div class="flex justify-center w-full">
-    <div id="card-content" class="card w-full max-w-4xl bg-base-100 border border-gray-300 rounded-xl">
+    <div id="card-content" class="card w-full max-w-4xl border border-gray-300 rounded-xl transition-all duration-300">
         <!-- Front/back card with flip functionality -->
         <div class="card-body min-h-[300px] flex items-center justify-center text-center">
             <!-- Question shown by default -->
-            <div id="question" class="text-3xl font-medium">
+            <div id="question" class="text-3xl font-medium transition-opacity duration-300">
                 {{ question_text }}
             </div>
 
             <!-- Answer hidden by default -->
-            <div id="answer" class="hidden">
+            <div id="answer" class="hidden opacity-0 transition-opacity duration-300">
                 <h3 class="text-xl mb-2">Správná odpověď:</h3>
                 <p class="text-3xl font-medium">{{ question_answer }}</p>
             </div>
         </div>
 
         <div class="card-actions justify-center pb-4">
-            <button onclick="toggleAnswer()" class="btn btn-primary btn-soft">Zobrazit odpověď</button>
+            <button id="answerToggleBtn" onclick="toggleAnswer()" class="btn btn-primary btn-soft min-w-40">Zobrazit odpověď</button>
         </div>
     </div>
 </div>
@@ -158,23 +158,50 @@
     });
 </script>
 
-<!-- JavaScript for toggling answer and timer -->
 <script>
     function toggleAnswer() {
         const question = document.getElementById('question');
         const answer = document.getElementById('answer');
         const card = document.getElementById('card-content');
+        const answerBtn = document.getElementById('answerToggleBtn');
 
         if (question.classList.contains('hidden')) {
-            // Switch back to question
-            question.classList.remove('hidden');
-            answer.classList.add('hidden');
-            card.classList.remove('bg-slate-50');
+            // First fade the answer out
+            answer.classList.add('opacity-0');
+
+            // After fade out completes, switch elements
+            setTimeout(() => {
+                // Switch back to question
+                question.classList.remove('hidden');
+                setTimeout(() => question.classList.remove('opacity-0'), 50);
+                answer.classList.add('hidden');
+
+                // Change background
+                card.classList.remove('bg-slate-100');
+                card.classList.add('bg-white');
+
+                // Update button style and text
+                answerBtn.textContent = 'Zobrazit odpověď';
+            }, 300);
+
         } else {
-            // Switch to answer
-            question.classList.add('hidden');
-            answer.classList.remove('hidden');
-            card.classList.add('bg-slate-50');
+            // First fade the question out
+            question.classList.add('opacity-0');
+
+            // After fade out completes, switch elements
+            setTimeout(() => {
+                // Switch to answer
+                question.classList.add('hidden');
+                answer.classList.remove('hidden');
+                setTimeout(() => answer.classList.remove('opacity-0'), 50);
+
+                // Change background
+                card.classList.remove('bg-white');
+                card.classList.add('bg-slate-100');
+
+                // Update button style and text;
+                answerBtn.textContent = 'Zpět na otázku';
+            }, 300);
         }
     }
 
