@@ -78,12 +78,17 @@
     <div class="card rounded-xl overflow-hidden border border-gray-300">
         <div class="card-body">
             <h2 class="card-title">Aktuální hra: {{ loaded_game }}</h2>
-            <p>Načíst nový gamefile do hry</p>
+            <p>Načíst nový gamefile do hry. Gamefile je soubor ve specifickém formátu, který defunuje jedno kolo hry včetně otázek a tajenky.</p>
 
             <form action="/admin_dashboard/load_gamefile" method="post" enctype="multipart/form-data"
                   class="form-control w-full">
                 <div class="flex flex-col gap-4">
-                    <input type="file" name="file" class="file-input file-input-bordered w-full"/>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Soubor hry</span>
+                        </label>
+                        <input type="file" name="file" class="file-input file-input-bordered w-full"/>
+                    </div>
                     <button type="submit" class="btn btn-primary">Nahrát soubor</button>
                 </div>
             </form>
@@ -99,14 +104,38 @@
 
             <form action="/admin_dashboard/load_questionslist" method="post" enctype="multipart/form-data"
                   class="form-control w-full">
+
                 <div class="flex flex-col gap-3 mt-2">
-                    <input type="file" name="file" class="file-input file-input-bordered w-full"/>
-                    <input type="text" placeholder="Počet her" name="NUMBER_OF_GAMEFILES"
-                           class="input input-bordered w-full"/>
-                    <input type="text" placeholder="Počet předmětů (řádků)" name="NUMBER_OF_SUBJECTS_IN_GAMEFILE"
-                           class="input input-bordered w-full"/>
-                    <input type="text" placeholder="Počet otázek (sloupců)" name="NUMBER_OF_QUESTIONS_PER_SUBJECT"
-                           class="input input-bordered w-full"/>
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">CSV soubor s otázkami</span>
+                        </label>
+                        <input type="file" name="file" class="file-input file-input-bordered w-full"/>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Počet her</span>
+                        </label>
+                        <input type="text" name="NUMBER_OF_GAMEFILES"
+                               class="input input-bordered w-full"/>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Počet předmětů (řádků)</span>
+                        </label>
+                        <input type="text" name="NUMBER_OF_SUBJECTS_IN_GAMEFILE"
+                               class="input input-bordered w-full"/>
+                    </div>
+
+                    <div class="form-control">
+                        <label class="label">
+                            <span class="label-text">Počet otázek (sloupců)</span>
+                        </label>
+                        <input type="text" name="NUMBER_OF_QUESTIONS_PER_SUBJECT"
+                               class="input input-bordered w-full"/>
+                    </div>
 
                     <button id="submitBtn" onclick="handleFormSubmit(event)" type="submit" class="btn btn-primary">
                         <span id="buttonText">Generovat gamefiles</span>
@@ -119,6 +148,7 @@
             <dialog id="outputModal" class="modal">
                 <div class="modal-box">
                     <h3 class="font-bold text-lg">Výstup generování</h3>
+
                     <pre id="modalOutput" class="bg-base-200 p-4 mt-4 rounded-lg text-sm overflow-auto max-h-96"></pre>
 
                     <div id="downloadSection" class="mt-4 hidden">
@@ -128,21 +158,21 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                             </svg>
-                            <span>Soubory byly úspěšně vygenerovány!</span>
+                            <span>Gamefiles byly úspěšně vygenerovány!</span>
                         </div>
-                        <a id="downloadLink" href="#" class="btn btn-success w-full mt-2">
+                        <a id="downloadLink" href="#" class="btn btn-outline w-full mt-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24"
                                  stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                       d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
                             </svg>
-                            Stáhnout vygenerované soubory
+                            Stáhnout vygenerovaný soubor
                         </a>
                     </div>
 
                     <div class="modal-action">
                         <form method="dialog">
-                            <button class="btn">Zavřít</button>
+                            <button class="btn w-full mt-2">Zavřít</button>
                         </form>
                     </div>
                 </div>
@@ -192,11 +222,11 @@
                     // Update alert style and message based on status
                     if (data.status === "success") {
                         alertElement.className = "alert alert-success";
-                        alertMessage.textContent = "Soubory byly úspěšně vygenerovány!";
+                        alertMessage.textContent = "Gamefiles byly úspěšně vygenerovány!";
                     } else if (data.status === "partial") {
                         alertElement.className = "alert alert-warning";
-                        alertMessage.textContent = `Částečný úspěch: Vygenerováno ${data.num_files} souborů s chybami.`;
-                        modalOutput.textContent += "\n\nWarning: Generation encountered errors but some files were created.";
+                        alertMessage.textContent = `Částečný úspěch: Vygenerováno ${data.num_files} gamefiles.`;
+                        // modalOutput.textContent += "\n\nWarning: Generation encountered errors but some files were created.";
                     }
                 } else {
                     downloadSection.classList.add("hidden");

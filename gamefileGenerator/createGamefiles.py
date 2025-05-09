@@ -230,12 +230,25 @@ def generate_gamefiles(FILE_NAME,
             # print("-------------------------------")
             print("> Gamefile", i, "created successfully.")
     except Exception as e:
-        print("Crash loop back off!\n\
-        This run was not able to fulfill the requirements with the specified CSV file\n\
-        How to fix?\n\
-        1) Run it again. Maybe it was a close call but the odds were not in your favour.\n\
-        2) Add more subjects and questions into the CSV file.\n\
-        3) Relax the requirements. Try to require less questions/subjects in each gamefile.")
+        print("-----------------------------------------------")
+        print("> Crash loop back off!")
+        print("-----------------------------------------------")
+        print("This run was not able to fulfill all")
+        print("requirements with the specified CSV file")
+        print("How to fix?")
+        print("- Run it again. Maybe it was a close call")
+        print("  but the odds were not in your favour.")
+        print("- Add more subjects and questions into the CSV.")
+        print("- Relax the requirements. Try to require")
+        print("  less questions/subjects in each gamefile.")
+
+        # print("--------------------------------")
+        # print("Crash loop back off!\n"
+        #       "This run was not able to fulfill the requirements with the specified CSV file\n"
+        #       "How to fix?\n"
+        #       "1) Run it again. Maybe it was a close call but the odds were not in your favour.\n"
+        #       "2) Add more subjects and questions into the CSV file.\n"
+        #       "3) Relax the requirements. Try to require less questions/subjects in each gamefile.")
         generation_error = True
 
     # Retire all other unused subjects into unused questions
@@ -254,11 +267,11 @@ def generate_gamefiles(FILE_NAME,
 
     # Count how many gamefiles were written
     gamefiles_written = len(banka.gamefile_list)
-    print("-------------------------------")
+    print("-----------------------------------------------")
     print("Number of gamefiles written:", gamefiles_written)
-    print("-------------------------------")
+    print("-----------------------------------------------")
 
-    print("> Gamefile generation finished.")
+    print("> Gamefile generation finished.", end='')
 
     # Consider it a success if any gamefiles were written and export worked
     success = gamefiles_written > 0 and not export_error
