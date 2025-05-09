@@ -67,6 +67,7 @@ Working directory: /home/smidra/
 WSGI configuration file: /var/www/smidra_pythonanywhere_com_wsgi.py
 Python version: 3.13
 Force HTTPS: Enable
+
 ```
 
 A to WSGI (/var/www/smidra_pythonanywhere_com_wsgi.py) vypadá takto:
@@ -105,6 +106,7 @@ Hra bude spuštěna na http://0.0.0.0:5050
 
 ```
 python -m venv .venv04
+source .venv04/bin/activate
 pip install -r requirements.txt
 FLASK_APP="flask_app.py" flask run
 ```
